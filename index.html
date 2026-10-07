@@ -1,0 +1,334 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Plateforme SOC Bénin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Portail public du SOC — sobre et institutionnel, à l'image des vrais CSIRT (csirt.bj, cert.ssi.gouv.fr).
+   Blanc dominant, un seul bleu marine, rouge réservé au bouton « Déclarer » et au critique. Logo officiel. */
+:root{
+  --bg:#ffffff; --alt:#f6f7f9; --navy:#16305a; --navy-d:#0f2648;
+  --text:#2b3340; --muted:#6c7684; --line:#e4e7ec; --red:#c21f10;
+  --f:"Source Sans 3",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;color:var(--navy);font-weight:700;line-height:1.25}
+a{color:var(--navy);text-decoration:none}
+a:hover{text-decoration:underline}
+[hidden]{display:none!important}
+img{max-width:100%}
+
+.tri{height:3px;display:flex}.tri span{flex:1}
+.tri span:nth-child(1){background:#0a8a4f}.tri span:nth-child(2){background:#fbd016}.tri span:nth-child(3){background:#e11b2e}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+header{border-bottom:1px solid var(--line);background:var(--bg)}
+.hd{max-width:980px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:20px}
+.logo-img{height:46px;width:auto;display:block;cursor:pointer}
+.hd nav{margin-left:auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.hd nav a{color:var(--text);font-weight:600;font-size:15px;padding:7px 10px;border-radius:5px;cursor:pointer}
+.hd nav a:hover{background:var(--alt);text-decoration:none}
+.hd nav a.on{color:var(--navy);box-shadow:inset 0 -2px 0 var(--navy)}
+.menu-toggle{display:none}
+
+.view[hidden]{display:none!important}
+
+.intro{display:grid;grid-template-columns:1.6fr 1fr;gap:34px;padding:34px 0 30px;border-bottom:1px solid var(--line)}
+.intro h1{font-size:30px;margin-bottom:12px}
+.intro p{color:var(--text);margin:0 0 20px;max-width:58ch}
+.intro .cta{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-red{background:var(--red);color:#fff;border:0;border-radius:7px;padding:12px 20px;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer}
+.btn-red:hover{background:#a81a0d}
+.urg{font-size:14px;color:var(--muted)}.urg b{color:var(--navy);font-weight:700}
+.sidebox{border:1px solid var(--line);border-radius:8px;padding:18px;background:var(--alt)}
+.sidebox h3{font-size:16px;margin-bottom:10px}
+.sidebox ol{margin:0;padding-left:18px;font-size:14.5px;color:var(--text)}
+.sidebox li{margin-bottom:7px}
+
+.homeveille{padding:28px 0;border-bottom:1px solid var(--line)}
+.hv-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
+.hv-h h2{font-size:19px}
+.adv{display:block;padding:12px 0;border-top:1px solid var(--line);color:inherit}
+.adv:hover{text-decoration:none}.adv:hover .at{text-decoration:underline}
+.adv .am{font-size:13px;color:var(--muted);margin-bottom:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.adv .ref{font-variant-numeric:tabular-nums}
+.adv .at{font-size:15.5px;color:var(--navy);font-weight:600;line-height:1.35}
+.sev{font-size:12.5px;font-weight:700}
+.sev.crit{color:var(--red)}.sev.norm{color:var(--muted)}
+.cvss{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.more{display:inline-block;margin-top:14px;font-weight:600;font-size:14.5px}
+
+.missions{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;padding:30px 0;border-bottom:1px solid var(--line)}
+.missions h3{font-size:17px;margin-bottom:6px}
+.missions p{color:var(--text);margin:0;font-size:15px}
+.about{padding:26px 0;color:var(--text)}
+.about h2{font-size:19px;margin-bottom:8px}
+.about p{max-width:72ch;margin:0 0 12px}
+.affil{font-size:14px;color:var(--muted)}.affil b{color:var(--text)}
+
+.ph{padding:26px 0 8px}
+.ph h1{font-size:26px;margin-bottom:4px}.ph p{color:var(--muted);margin:0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;padding:14px 0}
+.filters button{border:1px solid var(--line);background:var(--bg);color:var(--muted);font-family:inherit;font-weight:600;font-size:14px;padding:6px 13px;border-radius:6px;cursor:pointer}
+.filters button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.listwrap{padding-bottom:40px}
+.lrow{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-top:1px solid var(--line)}
+.lrow:last-child{border-bottom:1px solid var(--line)}
+.lrow .ld{font-size:13.5px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;min-width:92px}
+.lrow .lt{font-size:16px;color:var(--navy);font-weight:600}
+.lrow .lr{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.lrow .lx{margin-left:auto;white-space:nowrap}
+
+.formwrap{padding:22px 0 44px;max-width:720px}
+fieldset{border:0;margin:0 0 22px;padding:0}
+legend{font-size:14px;font-weight:700;color:var(--navy);padding:0 0 12px;border-bottom:1px solid var(--line);width:100%;margin-bottom:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}
+label{font-size:14px;font-weight:600;color:var(--text)}label .req{color:var(--red)}
+input,select,textarea{font-family:inherit;font-size:15px;color:var(--text);background:var(--bg);border:1px solid #cfd5de;border-radius:6px;padding:9px 11px;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-offset:0;border-color:var(--navy)}
+textarea{resize:vertical;min-height:100px}
+.hint{font-size:13px;color:var(--muted)}
+.sev-opts{display:flex;gap:18px;flex-wrap:wrap}
+.sev-opts label{display:flex;align-items:center;gap:7px;font-weight:600;cursor:pointer}
+.drop{border:1px dashed #cfd5de;border-radius:6px;padding:16px;text-align:center;color:var(--muted);font-size:14px;background:var(--alt);cursor:pointer}
+.actions{display:flex;gap:12px;align-items:center;margin-top:8px}
+.btn{border:0;border-radius:7px;padding:11px 20px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy-d)}
+.btn-ln{background:none;border:0;color:var(--muted);font-family:inherit;font-size:15px;cursor:pointer}
+.aside-note{background:var(--alt);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:0 6px 6px 0;padding:12px 14px;font-size:14px;margin-bottom:20px}
+.confirm{text-align:center;padding:40px 0;max-width:520px}
+.confirm .ok{font-size:40px;color:#1f8a4c}
+.confirm h2{font-size:22px;margin:8px 0}.confirm p{color:var(--muted)}
+.refb{display:inline-block;margin:14px 0;font-size:19px;font-weight:700;color:var(--navy);background:var(--alt);border:1px solid var(--line);padding:9px 18px;border-radius:7px;font-variant-numeric:tabular-nums}
+
+.track{display:flex;gap:10px;flex-wrap:wrap;padding:18px 0}
+.track input{max-width:260px}
+.tl{list-style:none;margin:0;padding:0;max-width:620px}
+.tl li{display:grid;grid-template-columns:18px 1fr;gap:14px;padding-bottom:18px;position:relative}
+.tl li:not(:last-child)::before{content:"";position:absolute;left:8px;top:20px;bottom:0;width:1px;background:var(--line)}
+.dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);background:var(--bg);margin-top:2px;z-index:1}
+.dot.done{background:var(--navy);border-color:var(--navy)}.dot.now{background:var(--red);border-color:var(--red)}
+.tl b{display:block;font-size:15px;color:var(--text)}.tl span{font-size:13px;color:var(--muted)}
+
+.cl{display:flex;gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line)}
+.cl .k{font-size:13px;color:var(--muted);min-width:120px}
+.cl .v{font-weight:600;color:var(--navy)}
+.cl .cp{margin-left:auto;border:1px solid var(--line);background:var(--bg);color:var(--muted);font-family:inherit;font-size:12.5px;padding:3px 9px;border-radius:5px;cursor:pointer}
+
+footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
+.fin{max-width:980px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:26px}
+.fin h5{font-size:13px;color:var(--muted);margin:0 0 10px;font-weight:700}
+.fin a,.fin p{display:block;font-size:14px;margin-bottom:6px;color:var(--text)}
+.fin .fl{height:40px;margin-bottom:10px}
+.fbot{border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--muted);padding:12px 20px}
+
+@media (max-width:820px){
+  .hd nav{display:none;order:3;width:100%;flex-direction:column;align-items:stretch;gap:0;margin:8px -20px -12px;border-top:1px solid var(--line)}
+  .hd nav.open{display:flex}
+  .hd nav a{padding:12px 20px;border-bottom:1px solid var(--line);border-radius:0}
+  .hd nav a.on{box-shadow:none;background:var(--alt)}
+  .menu-toggle{display:block;margin-left:auto;border:1px solid var(--line);background:var(--bg);font-size:20px;padding:5px 11px;border-radius:6px;cursor:pointer;color:var(--navy)}
+  .intro,.missions,.frow{grid-template-columns:1fr;gap:24px}
+  .fin{grid-template-columns:1fr 1fr}
+}
+@media (max-width:460px){.frow{grid-template-columns:1fr}.fin{grid-template-columns:1fr}}
+</style>
+
+<div class="tri"><span></span><span></span><span></span></div>
+<header>
+  <div class="hd">
+    <img src="soc-logo.jpg" alt="SOC — Centre de supervision et de réponse aux incidents des OIIC & SFD" class="logo-img" id="hdLogo">
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+    <nav id="pubnav">
+      <a data-pub="home" class="on">Accueil</a>
+      <a data-pub="veille">Veille &amp; alertes</a>
+      <a data-pub="signaler">Déclarer un incident</a>
+      <a data-pub="suivi">Suivi</a>
+      <a data-pub="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HOME -->
+<section class="view" id="pub-home">
+  <div class="wrap">
+    <div class="intro">
+      <div>
+        <h1>Centre de supervision et de réponse aux incidents</h1>
+        <p>Le SOC national supervise et traite les incidents de cybersécurité des opérateurs d'infrastructures critiques (OIIC) et des systèmes financiers décentralisés (SFD) du Bénin. Permanence 24 h/24, 7 j/7.</p>
+        <div class="cta">
+          <button class="btn-red" data-pub="signaler">Déclarer un incident</button>
+          <span class="urg">Urgence : <b>+229 01 21 36 87 23</b> · soc@asin.bj</span>
+        </div>
+      </div>
+      <div class="sidebox">
+        <h3>Vous subissez un incident ?</h3>
+        <ol>
+          <li>Isolez si possible le système touché.</li>
+          <li>Déclarez l'incident via le formulaire ou la ligne d'urgence.</li>
+          <li>Conservez les journaux et preuves.</li>
+          <li>Un analyste vous recontacte pour la suite.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="homeveille">
+      <div class="hv-h"><h2>Dernière veille</h2><a class="more" data-pub="veille">Voir toute la veille →</a></div>
+      <div id="homeVeilleList"></div>
+    </div>
+
+    <div class="missions">
+      <div><h3>Supervision</h3><p>Veille et détection continues sur le périmètre des opérateurs critiques et des institutions de microfinance.</p></div>
+      <div><h3>Réponse à incident</h3><p>Qualification, coordination et traitement des incidents déclarés, jusqu'à leur clôture.</p></div>
+      <div><h3>Alertes aux opérateurs</h3><p>Diffusion des alertes et avis de sécurité aux organismes raccordés.</p></div>
+    </div>
+
+    <div class="about">
+      <h2>À propos</h2>
+      <p>Le centre est le point de contact des opérateurs d'infrastructures critiques et des institutions de microfinance en cas d'incident de sécurité informatique. Il assure la veille, l'alerte et la coordination de la réponse, dans le cadre de la Politique de Protection des Infrastructures d'Information Critiques (PPIIC, Décret 2023-060) et en articulation avec le bjCSIRT.</p>
+      <p class="affil"><b>Affiliations :</b> FIRST · AfricaCERT · bjCSIRT</p>
+    </div>
+  </div>
+</section>
+
+<!-- VEILLE & ALERTES -->
+<section class="view" id="pub-veille" hidden>
+  <div class="wrap">
+    <div class="ph"><h1>Veille &amp; alertes</h1><p>Vulnérabilités, menaces et bulletins publiés par le centre. Aucune information sur les incidents en cours de traitement.</p></div>
+    <div class="filters" id="veFilters"></div>
+    <div class="listwrap" id="veList"></div>
+  </div>
+</section>
+
+<!-- SIGNALER -->
+<section class="view" id="pub-signaler" hidden>
+  <div class="wrap">
+    <div class="ph"><h1>Déclarer un incident</h1><p>Affectant un OIIC ou un SFD. Accessible sans compte.</p></div>
+    <form id="incidentForm" class="formwrap" novalidate>
+      <div class="aside-note">Incident critique ou élevé : à notifier au SOC dans les meilleurs délais (obligation PPIIC). Les pièces jointes sont chiffrées à la transmission ; ne joignez pas de secrets en clair.</div>
+      <fieldset>
+        <legend>Organisme concerné</legend>
+        <div class="frow"><div class="field full"><label for="f-org">Opérateur / SFD <span class="req">*</span></label><select id="f-org" required><option value="" selected disabled>Sélectionner…</option></select></div></div>
+        <div class="frow"><div class="field"><label for="f-sector">Secteur</label><input id="f-sector" readonly placeholder="Rempli automatiquement"></div><div class="field"><label for="f-contact">Point de contact <span class="req">*</span></label><input id="f-contact" required placeholder="Nom · fonction"></div></div>
+      </fieldset>
+      <fieldset>
+        <legend>Nature de l'incident</legend>
+        <div class="frow">
+          <div class="field"><label for="f-type">Type <span class="req">*</span></label><select id="f-type" required><option value="" selected disabled>Sélectionner…</option><option>Intrusion / accès non autorisé</option><option>Rançongiciel</option><option>Déni de service (DDoS)</option><option>Compromission / fuite de données</option><option>Fraude financière / mobile money</option><option>Hameçonnage ciblé</option><option>Logiciel malveillant</option><option>Indisponibilité majeure de service</option><option>Défiguration de site</option><option>Autre</option></select></div>
+          <div class="field"><label for="f-detected">Date & heure de détection <span class="req">*</span></label><input id="f-detected" type="datetime-local" required></div>
+        </div>
+        <div class="field full" style="margin-bottom:14px"><label>Criticité estimée <span class="req">*</span></label>
+          <div class="sev-opts">
+            <label><input type="radio" name="sev" value="Faible"> Faible</label>
+            <label><input type="radio" name="sev" value="Modéré"> Modéré</label>
+            <label><input type="radio" name="sev" value="Élevé"> Élevé</label>
+            <label><input type="radio" name="sev" value="Critique"> Critique</label>
+          </div>
+        </div>
+        <div class="field full"><label for="f-assets">Systèmes / services affectés</label><input id="f-assets" placeholder="ex. core banking, portail usager, SI facturation…"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Description</legend>
+        <div class="field full" style="margin-bottom:14px"><label for="f-desc">Description des faits <span class="req">*</span></label><textarea id="f-desc" required placeholder="Chronologie, vecteur suspecté, impact, mesures déjà prises…"></textarea></div>
+        <div class="field full"><label for="f-file">Pièces jointes</label><div class="drop" id="drop">Glissez des fichiers ici ou cliquez · .log .pcap .txt .csv .png — 25 Mo max</div><input id="f-file" type="file" multiple hidden></div>
+      </fieldset>
+      <div class="actions"><button type="submit" class="btn btn-red" style="font-size:15px;padding:11px 20px">Transmettre le signalement</button><button type="reset" class="btn-ln">Réinitialiser</button></div>
+    </form>
+    <div class="confirm" id="confirmCard" hidden>
+      <div class="ok">✓</div><h2>Signalement transmis</h2>
+      <p>Enregistré et transmis au SOC. Conservez la référence pour suivre le traitement.</p>
+      <div class="refb" id="refOut">SOC-2026-00000</div>
+      <div class="actions" style="justify-content:center"><button class="btn btn-navy" id="newReport">Nouveau signalement</button><button class="btn-ln" data-pub="suivi">Suivre ce signalement</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUIVI -->
+<section class="view" id="pub-suivi" hidden>
+  <div class="wrap">
+    <div class="ph"><h1>Suivi d'un signalement</h1><p>Saisissez votre référence pour consulter l'avancement.</p></div>
+    <div class="track"><input id="trackInput" placeholder="SOC-2026-00042" aria-label="Référence"><button class="btn btn-navy" id="trackBtn">Rechercher</button></div>
+    <div style="max-width:620px;padding-bottom:40px">
+      <p style="color:var(--muted);font-size:14px;margin-top:0"><span id="trackRef" style="font-weight:700;color:var(--navy)">SOC-2026-00042</span> · Opérateur du secteur Finance · Rançongiciel · détecté le 03/10/2026</p>
+      <ul class="tl">
+        <li><span class="dot done"></span><div><b>Signalement reçu</b><span>03/10/2026 · 21:48</span></div></li>
+        <li><span class="dot done"></span><div><b>Qualifié « Élevé » par l'analyste de permanence</b><span>03/10/2026 · 23:10</span></div></li>
+        <li><span class="dot now"></span><div><b>En traitement — coordination de la réponse</b><span>En cours · analyste SOC-N2</span></div></li>
+        <li><span class="dot"></span><div><b>Résolution et retour d'expérience</b><span>À venir</span></div></li>
+        <li><span class="dot"></span><div><b>Clôture</b><span>À venir</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="view" id="pub-contact" hidden>
+  <div class="wrap">
+    <div class="ph"><h1>Contact</h1><p>En cas d'urgence, appelez — n'attendez pas le formulaire.</p></div>
+    <div style="max-width:560px;padding:22px 0 44px">
+      <div class="cl" style="border-top:0"><span class="k">Urgence 24/7</span><span class="v">+229 01 21 36 87 23</span><button class="cp" data-copy="+229 01 21 36 87 23">Copier</button></div>
+      <div class="cl"><span class="k">E-mail</span><span class="v">soc@asin.bj</span><button class="cp" data-copy="soc@asin.bj">Copier</button></div>
+      <div class="cl"><span class="k">WhatsApp</span><span class="v">+229 01 00 00 00 00</span><button class="cp" data-copy="whatsapp">Copier</button></div>
+      <div class="cl"><span class="k">Formulaire</span><span class="v"><a data-pub="signaler">Déclarer un incident</a></span></div>
+      <div class="cl"><span class="k">Adresse</span><span class="v">ASIN · Cotonou, Bénin</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fin">
+    <div><img src="soc-logo.jpg" alt="SOC" class="fl"><p style="color:var(--muted);font-size:13.5px">Centre de supervision et de réponse aux incidents des OIIC & SFD. Cadre PPIIC — Décret 2023-060.</p></div>
+    <div><h5>Navigation</h5><a data-pub="veille">Veille &amp; alertes</a><a data-pub="signaler">Déclarer un incident</a><a data-pub="suivi">Suivi</a></div>
+    <div><h5>Ressources</h5><a>RFC 2350</a><a>Cadre réglementaire</a></div>
+    <div><h5>Contact</h5><a data-pub="contact">soc@asin.bj</a><a data-pub="contact">Urgence 24/7</a><p style="color:var(--muted);font-size:13.5px">FIRST · AfricaCERT</p></div>
+  </div>
+  <div class="fbot">© 2026 SOC Bénin · maquette de démonstration</div>
+</footer>
+
+<script>
+var SECTORS={"TIC":["MTN Bénin","Moov Africa Bénin","Celtiis","SBIN","ASIN","ARCEP"],"Finance":["BCEAO (antenne)","Bank of Africa","Ecobank Bénin","Société Générale Bénin","UBA Bénin","NSIA Banque","GIM-UEMOA","CNSS"],"Énergie":["SBEE","CEB","SONACOP","ARE"],"Eau":["SONEB"],"Services publics":["ASIN","ANIP","DGID","Douanes","Trésor (DGTCP)","GUCE"],"Transport":["Port Autonome de Cotonou","ANAC","ANATT","ASECNA"],"Santé":["CNHU-HKM","SoBAPS","ANPS/ARCH"],"Médias":["ORTB","HAAC"],"SFD (microfinance)":["FECECAM","ALIDé","PADME","FINADEV","Vital Finance","CMMB"]};
+var ALE=[{ref:"SOC-BJ-2026-ALE-004",date:"06/10/2026",t:"Rançongiciel ciblant les passerelles VPN non patchées",sev:"Critique",status:"En cours"},{ref:"SOC-BJ-2026-ALE-003",date:"18/09/2026",t:"Vague d'hameçonnage mobile money visant les clients des SFD",sev:"Élevé",status:"En cours"},{ref:"SOC-BJ-2026-ALE-002",date:"05/09/2026",t:"Exploitation active d'une faille d'équipement périmétrique",sev:"Élevé",status:"Clôturée"}];
+var MEN=[{ref:"SOC-BJ-2026-MEN-007",date:"01/10/2026",t:"Campagne d'hameçonnage usurpant des banques béninoises",sev:"Élevé"},{ref:"SOC-BJ-2026-MEN-006",date:"20/09/2026",t:"Recrudescence des fraudes au « faux conseiller » (SFD)",sev:"Modéré"}];
+var AVI=[{ref:"SOC-BJ-2026-AVI-031",date:"06/10/2026",t:"Multiples vulnérabilités critiques dans des passerelles VPN",sev:"Critique",cvss:"9.8"},{ref:"SOC-BJ-2026-AVI-030",date:"22/09/2026",t:"Exécution de code à distance dans GLPI",sev:"Élevé",cvss:"8.8"},{ref:"SOC-BJ-2026-AVI-029",date:"12/09/2026",t:"Contournement d'authentification dans Zimbra",sev:"Modéré",cvss:"6.5"},{ref:"SOC-BJ-2026-AVI-028",date:"03/09/2026",t:"Injection SQL dans un progiciel bancaire répandu",sev:"Élevé",cvss:"8.2"}];
+var BUL=[{ref:"SOC-BJ-2026-BUL-010",date:"30/09/2026",t:"Bulletin hebdomadaire de veille — semaine 40",sev:"Faible"},{ref:"SOC-BJ-2026-BUL-009",date:"23/09/2026",t:"Bulletin hebdomadaire de veille — semaine 39",sev:"Faible"}];
+
+function sevTxt(s){return '<span class="sev '+(s==="Critique"?"crit":"norm")+'">'+s+'</span>';}
+function advRows(items){return items.map(function(a){return '<a class="adv"><div class="am"><span class="ref">'+a.ref+'</span><span>'+a.date+'</span>'+sevTxt(a.sev)+(a.cvss?'<span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?'<span class="cvss">'+a.status+'</span>':'')+'</div><div class="at">'+a.t+'</div></a>';}).join("");}
+function listRows(items){return items.map(function(a){return '<div class="lrow"><span class="ld">'+a.date+'</span><div><div class="lt">'+a.t+'</div><span class="lr">'+a.ref+'</span></div><span class="lx">'+sevTxt(a.sev)+(a.cvss?' <span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?' <span class="cvss">'+a.status+'</span>':'')+'</span></div>';}).join("");}
+
+function renderHome(){document.getElementById("homeVeilleList").innerHTML=advRows([ALE[0],AVI[0],MEN[0],BUL[0]]);bindPub();}
+var veFilter="tous";
+function renderVeille(){
+  var fl=document.getElementById("veFilters");
+  fl.innerHTML=[["tous","Toutes"],["ale","Alertes & menaces"],["avi","Avis (vulnérabilités)"],["bul","Bulletins"]].map(function(f){return '<button data-f="'+f[0]+'"'+(veFilter===f[0]?' class="on"':'')+'>'+f[1]+'</button>';}).join("");
+  fl.querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){veFilter=b.dataset.f;renderVeille();});});
+  var items=veFilter==="tous"?ALE.concat(MEN).concat(AVI).concat(BUL):veFilter==="ale"?ALE.concat(MEN):veFilter==="avi"?AVI:BUL;
+  document.getElementById("veList").innerHTML=listRows(items);
+}
+
+var fOrg=document.getElementById("f-org");
+Object.keys(SECTORS).forEach(function(sec){var og=document.createElement("optgroup");og.label=sec;SECTORS[sec].forEach(function(o){var op=document.createElement("option");op.value=o;op.textContent=o;op.dataset.sector=sec;og.appendChild(op);});fOrg.appendChild(og);});
+fOrg.addEventListener("change",function(){document.getElementById("f-sector").value=fOrg.options[fOrg.selectedIndex].dataset.sector||"";});
+var form=document.getElementById("incidentForm");
+function padRef(){return "SOC-2026-"+String(43+Math.floor(Math.random()*40)).padStart(5,"0");}
+form.addEventListener("submit",function(e){e.preventDefault();var org=fOrg.value,type=document.getElementById("f-type").value,sev=(form.querySelector('input[name=sev]:checked')||{}).value,contact=document.getElementById("f-contact").value;if(!org||!type||!sev||!contact){form.querySelectorAll('[required]').forEach(function(x){if(!x.value)x.focus();});if(!sev)form.querySelector('input[name=sev]').focus();return;}document.getElementById("refOut").textContent=padRef();form.hidden=true;document.getElementById("confirmCard").hidden=false;window.scrollTo({top:0,behavior:"smooth"});});
+document.getElementById("newReport").addEventListener("click",function(){form.reset();document.getElementById("f-sector").value="";document.getElementById("confirmCard").hidden=true;form.hidden=false;});
+var drop=document.getElementById("drop"),fileInput=document.getElementById("f-file");drop.addEventListener("click",function(){fileInput.click();});fileInput.addEventListener("change",function(){if(fileInput.files.length)drop.textContent=fileInput.files.length+' fichier(s) sélectionné(s)';});
+(function(){var d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());document.getElementById("f-detected").value=d.toISOString().slice(0,16);})();
+document.getElementById("trackBtn").addEventListener("click",function(){var v=document.getElementById("trackInput").value.trim();if(v)document.getElementById("trackRef").textContent=v.toUpperCase();});
+document.addEventListener("click",function(e){var b=e.target.closest(".cp");if(!b)return;var t=b.dataset.copy;if(t&&navigator.clipboard){navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="Copié";setTimeout(function(){b.textContent=o;},1200);}).catch(function(){});}});
+
+document.getElementById("menuToggle").addEventListener("click",function(){document.getElementById("pubnav").classList.toggle("open");});
+var pubViews=["home","veille","signaler","suivi","contact"];
+function showPub(v){if(pubViews.indexOf(v)<0)v="home";pubViews.forEach(function(x){document.getElementById("pub-"+x).hidden=(x!==v);});document.querySelectorAll("#pubnav a").forEach(function(a){a.classList.toggle("on",a.dataset.pub===v);});document.getElementById("pubnav").classList.remove("open");if(v==="veille")renderVeille();window.scrollTo({top:0});}
+function bindPub(){document.querySelectorAll("[data-pub]").forEach(function(b){if(b._b)return;b._b=1;b.addEventListener("click",function(){showPub(b.dataset.pub);});});}
+document.getElementById("hdLogo").addEventListener("click",function(){showPub("home");});
+
+renderHome();bindPub();showPub("home");
+</script>
+
+</body></html>
