@@ -1,4 +1,9 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Centre de supervision et de reponse aux incidents des OIIC & SFD du Benin.">
 <title>Plateforme SOC Bénin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -167,6 +172,9 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 }
 @media (max-width:460px){.frow{grid-template-columns:1fr}.fin{grid-template-columns:1fr}}
 </style>
+</head>
+<body>
+
 
 <div class="tri"><span></span><span></span><span></span></div>
 <header>
@@ -175,7 +183,7 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
     <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
     <nav id="pubnav">
       <a data-pub="home" class="on">Accueil</a>
-      <a data-pub="veille">Veille &amp; alertes</a>
+      <a data-pub="veille">Alertes</a>
       <a data-pub="signaler">Déclarer un incident</a>
       <a data-pub="suivi">Suivi</a>
       <a data-pub="cooperation">Coopération</a>
@@ -206,19 +214,19 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
     </div>
 
     <div class="homeveille">
-      <div class="hv-h"><h2>Dernière veille</h2><a class="more" data-pub="veille">Voir toute la veille →</a></div>
+      <div class="hv-h"><h2>Dernières alertes</h2><a class="more" data-pub="veille">Voir toutes les alertes →</a></div>
       <div id="homeVeilleList"></div>
     </div>
 
     <div class="missions">
-      <div><h3>Supervision</h3><p>Veille et détection continues sur le périmètre des opérateurs critiques et des institutions de microfinance.</p></div>
+      <div><h3>Supervision</h3><p>Surveillance et détection continues sur le périmètre des opérateurs critiques et des institutions de microfinance.</p></div>
       <div><h3>Réponse à incident</h3><p>Qualification, coordination et traitement des incidents déclarés, jusqu'à leur clôture.</p></div>
       <div><h3>Alertes aux opérateurs</h3><p>Diffusion des alertes et avis de sécurité aux organismes raccordés.</p></div>
     </div>
 
     <div class="about">
       <h2>À propos</h2>
-      <p>Le centre est le point de contact des opérateurs d'infrastructures critiques et des institutions de microfinance en cas d'incident de sécurité informatique. Il assure la veille, l'alerte et la coordination de la réponse, dans le cadre de la Politique de Protection des Infrastructures d'Information Critiques (PPIIC, Décret 2023-060) et en articulation avec le bjCSIRT.</p>
+      <p>Le centre est le point de contact des opérateurs d'infrastructures critiques et des institutions de microfinance en cas d'incident de sécurité informatique. Il assure la surveillance, l'alerte et la coordination de la réponse, dans le cadre de la Politique de Protection des Infrastructures d'Information Critiques (PPIIC, Décret 2023-060) et en articulation avec le bjCSIRT.</p>
       <p class="affil"><b>Affiliations :</b> FIRST · AfricaCERT · bjCSIRT</p>
     </div>
   </div>
@@ -227,7 +235,7 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 <!-- VEILLE & ALERTES -->
 <section class="view" id="pub-veille" hidden>
   <div class="wrap">
-    <div class="ph"><h1>Veille &amp; alertes</h1><p>Vulnérabilités, menaces et bulletins publiés par le centre. Aucune information sur les incidents en cours de traitement.</p></div>
+    <div class="ph"><h1>Alertes</h1><p>Vulnérabilités et menaces publiées par le centre. Aucune information sur les incidents en cours de traitement.</p></div>
     <div class="filters" id="veFilters"></div>
     <div class="listwrap" id="veList"></div>
   </div>
@@ -392,7 +400,7 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
       <h3>5.1 Réponse à incident</h3>
       <p>Triage, coordination et appui à la résolution des incidents déclarés, avec suivi jusqu'à la clôture et retour d'expérience.</p>
       <h3>5.2 Activités proactives</h3>
-      <p>Veille, diffusion d'alertes et d'avis de sécurité, sensibilisation des opérateurs et des SFD.</p>
+      <p>Surveillance, diffusion d'alertes et d'avis de sécurité, sensibilisation des opérateurs et des SFD.</p>
 
       <h2>6. Formulaires de déclaration</h2>
       <p>Déclaration en ligne via le <a data-pub="signaler">formulaire du site</a>, ou par courriel, téléphone et WhatsApp (voir section 2).</p>
@@ -406,7 +414,7 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 <footer>
   <div class="fin">
     <div><img src="soc-logo.jpg" alt="SOC" class="fl"><p style="color:var(--muted);font-size:13.5px">Centre de supervision et de réponse aux incidents des OIIC & SFD. Cadre PPIIC — Décret 2023-060.</p></div>
-    <div><h5>Navigation</h5><a data-pub="veille">Veille &amp; alertes</a><a data-pub="signaler">Déclarer un incident</a><a data-pub="suivi">Suivi</a></div>
+    <div><h5>Navigation</h5><a data-pub="veille">Alertes</a><a data-pub="signaler">Déclarer un incident</a><a data-pub="suivi">Suivi</a></div>
     <div><h5>Ressources</h5><a data-pub="rfc">RFC 2350</a><a data-pub="cooperation">Coopération & partenaires</a><a data-pub="cooperation">Cadre réglementaire</a></div>
     <div><h5>Contact</h5><a data-pub="contact">soc@asin.bj</a><a data-pub="contact">Urgence 24/7</a><p style="color:var(--muted);font-size:13.5px">FIRST · AfricaCERT</p></div>
   </div>
@@ -418,19 +426,18 @@ var SECTORS={"TIC":["MTN Bénin","Moov Africa Bénin","Celtiis","SBIN","ASIN","A
 var ALE=[{ref:"SOC-BJ-2026-ALE-004",date:"06/10/2026",t:"Rançongiciel ciblant les passerelles VPN non patchées",sev:"Critique",status:"En cours"},{ref:"SOC-BJ-2026-ALE-003",date:"18/09/2026",t:"Vague d'hameçonnage mobile money visant les clients des SFD",sev:"Élevé",status:"En cours"},{ref:"SOC-BJ-2026-ALE-002",date:"05/09/2026",t:"Exploitation active d'une faille d'équipement périmétrique",sev:"Élevé",status:"Clôturée"}];
 var MEN=[{ref:"SOC-BJ-2026-MEN-007",date:"01/10/2026",t:"Campagne d'hameçonnage usurpant des banques béninoises",sev:"Élevé"},{ref:"SOC-BJ-2026-MEN-006",date:"20/09/2026",t:"Recrudescence des fraudes au « faux conseiller » (SFD)",sev:"Modéré"}];
 var AVI=[{ref:"SOC-BJ-2026-AVI-031",date:"06/10/2026",t:"Multiples vulnérabilités critiques dans des passerelles VPN",sev:"Critique",cvss:"9.8"},{ref:"SOC-BJ-2026-AVI-030",date:"22/09/2026",t:"Exécution de code à distance dans GLPI",sev:"Élevé",cvss:"8.8"},{ref:"SOC-BJ-2026-AVI-029",date:"12/09/2026",t:"Contournement d'authentification dans Zimbra",sev:"Modéré",cvss:"6.5"},{ref:"SOC-BJ-2026-AVI-028",date:"03/09/2026",t:"Injection SQL dans un progiciel bancaire répandu",sev:"Élevé",cvss:"8.2"}];
-var BUL=[{ref:"SOC-BJ-2026-BUL-010",date:"30/09/2026",t:"Bulletin hebdomadaire de veille — semaine 40",sev:"Faible"},{ref:"SOC-BJ-2026-BUL-009",date:"23/09/2026",t:"Bulletin hebdomadaire de veille — semaine 39",sev:"Faible"}];
 
 function sevTxt(s){return '<span class="sev '+(s==="Critique"?"crit":"norm")+'">'+s+'</span>';}
 function advRows(items){return items.map(function(a){return '<a class="adv"><div class="am"><span class="ref">'+a.ref+'</span><span>'+a.date+'</span>'+sevTxt(a.sev)+(a.cvss?'<span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?'<span class="cvss">'+a.status+'</span>':'')+'</div><div class="at">'+a.t+'</div></a>';}).join("");}
 function listRows(items){return items.map(function(a){return '<div class="lrow"><span class="ld">'+a.date+'</span><div><div class="lt">'+a.t+'</div><span class="lr">'+a.ref+'</span></div><span class="lx">'+sevTxt(a.sev)+(a.cvss?' <span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?' <span class="cvss">'+a.status+'</span>':'')+'</span></div>';}).join("");}
 
-function renderHome(){document.getElementById("homeVeilleList").innerHTML=advRows([ALE[0],AVI[0],MEN[0],BUL[0]]);bindPub();}
+function renderHome(){document.getElementById("homeVeilleList").innerHTML=advRows([ALE[0],AVI[0],MEN[0]]);bindPub();}
 var veFilter="tous";
 function renderVeille(){
   var fl=document.getElementById("veFilters");
-  fl.innerHTML=[["tous","Toutes"],["ale","Alertes & menaces"],["avi","Avis (vulnérabilités)"],["bul","Bulletins"]].map(function(f){return '<button data-f="'+f[0]+'"'+(veFilter===f[0]?' class="on"':'')+'>'+f[1]+'</button>';}).join("");
+  fl.innerHTML=[["tous","Toutes"],["ale","Alertes & menaces"],["avi","Avis (vulnérabilités)"]].map(function(f){return '<button data-f="'+f[0]+'"'+(veFilter===f[0]?' class="on"':'')+'>'+f[1]+'</button>';}).join("");
   fl.querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){veFilter=b.dataset.f;renderVeille();});});
-  var items=veFilter==="tous"?ALE.concat(MEN).concat(AVI).concat(BUL):veFilter==="ale"?ALE.concat(MEN):veFilter==="avi"?AVI:BUL;
+  var items=veFilter==="tous"?ALE.concat(MEN).concat(AVI):veFilter==="ale"?ALE.concat(MEN):AVI;
   document.getElementById("veList").innerHTML=listRows(items);
 }
 
@@ -468,4 +475,5 @@ document.getElementById("hdLogo").addEventListener("click",function(){showPub("h
 renderHome();bindPub();showPub("home");
 </script>
 
-</body></html>
+</body>
+</html>
