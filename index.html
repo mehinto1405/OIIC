@@ -1,9 +1,4 @@
-<!doctype html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Centre de supervision et de reponse aux incidents des OIIC & SFD du Benin.">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Plateforme SOC Bénin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -141,6 +136,16 @@ textarea{resize:vertical;min-height:100px}
 .rfc .kv .k{color:var(--muted);min-width:190px;flex:none}
 .rfc .todo{color:var(--red);font-style:italic}
 
+/* fiche alerte / avis */
+.fiche{max-width:740px;padding:8px 0 44px}
+.fiche .back{display:inline-block;margin-bottom:14px;font-size:14px}
+.fiche h1{font-size:24px;margin-bottom:10px}
+.fiche .fmeta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:16px;font-size:13.5px;color:var(--muted)}
+.fiche .ftag{background:var(--navy);color:#fff;font-size:12px;font-weight:700;padding:2px 9px;border-radius:5px}
+.fiche h3{font-size:15px;margin:18px 0 4px}
+.fiche p{margin:0 0 10px;font-size:15px}
+.fiche .fref{display:block;font-size:14.5px;margin-bottom:5px}
+
 /* coopération */
 .coop{padding:8px 0 44px}
 .coop h2{font-size:18px;margin:26px 0 8px;padding-top:18px;border-top:1px solid var(--line)}
@@ -172,9 +177,6 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 }
 @media (max-width:460px){.frow{grid-template-columns:1fr}.fin{grid-template-columns:1fr}}
 </style>
-</head>
-<body>
-
 
 <div class="tri"><span></span><span></span><span></span></div>
 <header>
@@ -239,6 +241,11 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
     <div class="filters" id="veFilters"></div>
     <div class="listwrap" id="veList"></div>
   </div>
+</section>
+
+<!-- FICHE ALERTE / AVIS -->
+<section class="view" id="pub-fiche" hidden>
+  <div class="wrap"><div class="fiche" id="ficheBody"></div></div>
 </section>
 
 <!-- SIGNALER -->
@@ -423,13 +430,23 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 
 <script>
 var SECTORS={"TIC":["MTN Bénin","Moov Africa Bénin","Celtiis","SBIN","ASIN","ARCEP"],"Finance":["BCEAO (antenne)","Bank of Africa","Ecobank Bénin","Société Générale Bénin","UBA Bénin","NSIA Banque","GIM-UEMOA","CNSS"],"Énergie":["SBEE","CEB","SONACOP","ARE"],"Eau":["SONEB"],"Services publics":["ASIN","ANIP","DGID","Douanes","Trésor (DGTCP)","GUCE"],"Transport":["Port Autonome de Cotonou","ANAC","ANATT","ASECNA"],"Santé":["CNHU-HKM","SoBAPS","ANPS/ARCH"],"Médias":["ORTB","HAAC"],"SFD (microfinance)":["FECECAM","ALIDé","PADME","FINADEV","Vital Finance","CMMB"]};
-var ALE=[{ref:"SOC-BJ-2026-ALE-004",date:"06/10/2026",t:"Rançongiciel ciblant les passerelles VPN non patchées",sev:"Critique",status:"En cours"},{ref:"SOC-BJ-2026-ALE-003",date:"18/09/2026",t:"Vague d'hameçonnage mobile money visant les clients des SFD",sev:"Élevé",status:"En cours"},{ref:"SOC-BJ-2026-ALE-002",date:"05/09/2026",t:"Exploitation active d'une faille d'équipement périmétrique",sev:"Élevé",status:"Clôturée"}];
-var MEN=[{ref:"SOC-BJ-2026-MEN-007",date:"01/10/2026",t:"Campagne d'hameçonnage usurpant des banques béninoises",sev:"Élevé"},{ref:"SOC-BJ-2026-MEN-006",date:"20/09/2026",t:"Recrudescence des fraudes au « faux conseiller » (SFD)",sev:"Modéré"}];
-var AVI=[{ref:"SOC-BJ-2026-AVI-031",date:"06/10/2026",t:"Multiples vulnérabilités critiques dans des passerelles VPN",sev:"Critique",cvss:"9.8"},{ref:"SOC-BJ-2026-AVI-030",date:"22/09/2026",t:"Exécution de code à distance dans GLPI",sev:"Élevé",cvss:"8.8"},{ref:"SOC-BJ-2026-AVI-029",date:"12/09/2026",t:"Contournement d'authentification dans Zimbra",sev:"Modéré",cvss:"6.5"},{ref:"SOC-BJ-2026-AVI-028",date:"03/09/2026",t:"Injection SQL dans un progiciel bancaire répandu",sev:"Élevé",cvss:"8.2"}];
+var ALE=[
+{ref:"SOC-BJ-2026-ALE-004",date:"06/10/2026",t:"Rançongiciel ciblant les passerelles VPN non patchées",sev:"Critique",status:"En cours",type:"Alerte",desc:"Une campagne de rançongiciel exploite activement des failles sur des passerelles VPN non mises à jour exposées sur Internet. Plusieurs intrusions ont été observées dans la sous-région.",sys:"Passerelles VPN SSL/IPsec exposées et non corrigées.",sol:"Appliquer sans délai les correctifs de l'éditeur, restreindre l'exposition Internet, activer l'authentification multifacteur et rechercher d'éventuels signes de compromission.",refs:[{l:"Avis lié : SOC-BJ-2026-AVI-031"}]},
+{ref:"SOC-BJ-2026-ALE-003",date:"18/09/2026",t:"Vague d'hameçonnage mobile money visant les clients des SFD",sev:"Élevé",status:"En cours",type:"Alerte",desc:"De faux SMS et appels usurpant des institutions de microfinance demandent aux clients leurs codes de validation (OTP) pour détourner des comptes mobile money.",sys:"Clients mobile money des SFD.",sol:"Sensibiliser les clients : ne jamais communiquer un code OTP, ne pas rappeler les numéros reçus par SMS, signaler les messages frauduleux."},
+{ref:"SOC-BJ-2026-ALE-002",date:"05/09/2026",t:"Exploitation active d'une faille d'équipement périmétrique",sev:"Élevé",status:"Clôturée",type:"Alerte",desc:"Une faille d'un équipement de sécurité périmétrique a été exploitée dans la nature. L'alerte est clôturée après diffusion du correctif et vérification des parcs concernés.",sys:"Pare-feu et équipements de bordure concernés.",sol:"Correctif appliqué. Vérifier les journaux a posteriori pour toute activité suspecte."}];
+var MEN=[
+{ref:"SOC-BJ-2026-MEN-007",date:"01/10/2026",t:"Campagne d'hameçonnage usurpant des banques béninoises",sev:"Élevé",type:"Menace",desc:"Des sites et courriels frauduleux imitent des banques locales pour voler des identifiants de banque en ligne.",sys:"Clients de banque en ligne.",sol:"Vérifier l'adresse exacte du site, ne jamais saisir ses identifiants via un lien reçu, signaler les sites frauduleux."},
+{ref:"SOC-BJ-2026-MEN-006",date:"20/09/2026",t:"Recrudescence des fraudes au « faux conseiller » (SFD)",sev:"Modéré",type:"Menace",desc:"Des escrocs se font passer pour des conseillers d'institutions de microfinance afin d'obtenir des informations de compte.",sys:"Clients et agents des SFD.",sol:"Rappeler qu'un conseiller ne demande jamais de code secret ; vérifier l'identité par les canaux officiels."}];
+var AVI=[
+{ref:"SOC-BJ-2026-AVI-031",date:"06/10/2026",t:"Multiples vulnérabilités critiques dans des passerelles VPN",sev:"Critique",cvss:"9.8",type:"Avis",desc:"Plusieurs vulnérabilités, dont une permettant l'exécution de code à distance sans authentification, affectent des passerelles VPN largement déployées.",sys:"Passerelles VPN exposées (versions non corrigées).",sol:"Mettre à jour vers la version corrigée de l'éditeur dans les meilleurs délais.",refs:[{l:"Catalogue CVE (NVD)",u:"https://nvd.nist.gov/"}]},
+{ref:"SOC-BJ-2026-AVI-030",date:"22/09/2026",t:"Exécution de code à distance dans GLPI",sev:"Élevé",cvss:"8.8",type:"Avis",desc:"Une vulnérabilité permet l'exécution de code à distance sur les instances GLPI exposées.",sys:"Instances GLPI accessibles depuis Internet.",sol:"Appliquer la mise à jour éditeur ; restreindre l'accès à l'interface d'administration."},
+{ref:"SOC-BJ-2026-AVI-029",date:"12/09/2026",t:"Contournement d'authentification dans Zimbra",sev:"Modéré",cvss:"6.5",type:"Avis",desc:"Une faille autorise un contournement d'authentification sur certaines versions de Zimbra.",sys:"Serveurs de messagerie Zimbra.",sol:"Déployer le correctif ; vérifier les accès récents."},
+{ref:"SOC-BJ-2026-AVI-028",date:"03/09/2026",t:"Injection SQL dans un progiciel bancaire répandu",sev:"Élevé",cvss:"8.2",type:"Avis",desc:"Une injection SQL permet l'accès non autorisé à des données sur un progiciel bancaire répandu.",sys:"Applications bancaires utilisant le composant vulnérable.",sol:"Appliquer le correctif éditeur ; auditer les requêtes et les journaux d'accès."}];
+var ADV={};[].concat(ALE,MEN,AVI).forEach(function(a){ADV[a.ref]=a;});
 
 function sevTxt(s){return '<span class="sev '+(s==="Critique"?"crit":"norm")+'">'+s+'</span>';}
-function advRows(items){return items.map(function(a){return '<a class="adv"><div class="am"><span class="ref">'+a.ref+'</span><span>'+a.date+'</span>'+sevTxt(a.sev)+(a.cvss?'<span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?'<span class="cvss">'+a.status+'</span>':'')+'</div><div class="at">'+a.t+'</div></a>';}).join("");}
-function listRows(items){return items.map(function(a){return '<div class="lrow"><span class="ld">'+a.date+'</span><div><div class="lt">'+a.t+'</div><span class="lr">'+a.ref+'</span></div><span class="lx">'+sevTxt(a.sev)+(a.cvss?' <span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?' <span class="cvss">'+a.status+'</span>':'')+'</span></div>';}).join("");}
+function advRows(items){return items.map(function(a){return '<a class="adv" data-ref="'+a.ref+'"><div class="am"><span class="ref">'+a.ref+'</span><span>'+a.date+'</span>'+sevTxt(a.sev)+(a.cvss?'<span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?'<span class="cvss">'+a.status+'</span>':'')+'</div><div class="at">'+a.t+'</div></a>';}).join("");}
+function listRows(items){return items.map(function(a){return '<a class="lrow" data-ref="'+a.ref+'"><span class="ld">'+a.date+'</span><div><div class="lt">'+a.t+'</div><span class="lr">'+a.ref+'</span></div><span class="lx">'+sevTxt(a.sev)+(a.cvss?' <span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?' <span class="cvss">'+a.status+'</span>':'')+'</span></a>';}).join("");}
 
 function renderHome(){document.getElementById("homeVeilleList").innerHTML=advRows([ALE[0],AVI[0],MEN[0]]);bindPub();}
 var veFilter="tous";
@@ -439,6 +456,18 @@ function renderVeille(){
   fl.querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){veFilter=b.dataset.f;renderVeille();});});
   var items=veFilter==="tous"?ALE.concat(MEN).concat(AVI):veFilter==="ale"?ALE.concat(MEN):AVI;
   document.getElementById("veList").innerHTML=listRows(items);
+  bindPub();
+}
+function showFiche(ref){var a=ADV[ref];if(!a)return;
+  var h='<a class="back" data-pub="veille">← Retour aux alertes</a>'+
+    '<h1>'+a.t+'</h1>'+
+    '<div class="fmeta">'+(a.type?'<span class="ftag">'+a.type+'</span>':'')+'<span class="ref">'+a.ref+'</span><span>'+a.date+'</span>'+sevTxt(a.sev)+(a.cvss?'<span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?'<span class="cvss">'+a.status+'</span>':'')+'</div>'+
+    (a.desc?'<h3>Description</h3><p>'+a.desc+'</p>':'')+
+    (a.sys?'<h3>Systèmes concernés</h3><p>'+a.sys+'</p>':'')+
+    (a.sol?'<h3>Solution / mesures</h3><p>'+a.sol+'</p>':'')+
+    (a.refs&&a.refs.length?'<h3>Références</h3>'+a.refs.map(function(r){return r.u?'<a class="fref" href="'+r.u+'" target="_blank" rel="noopener">'+r.l+'</a>':'<span class="fref">'+r.l+'</span>';}).join(''):'');
+  document.getElementById("ficheBody").innerHTML=h;
+  showPub("fiche");bindPub();
 }
 
 var fOrg=document.getElementById("f-org");
@@ -467,13 +496,12 @@ document.getElementById("trackBtn").addEventListener("click",function(){var v=do
 document.addEventListener("click",function(e){var b=e.target.closest(".cp");if(!b)return;var t=b.dataset.copy;if(t&&navigator.clipboard){navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="Copié";setTimeout(function(){b.textContent=o;},1200);}).catch(function(){});}});
 
 document.getElementById("menuToggle").addEventListener("click",function(){document.getElementById("pubnav").classList.toggle("open");});
-var pubViews=["home","veille","signaler","suivi","cooperation","contact","rfc"];
+var pubViews=["home","veille","fiche","signaler","suivi","cooperation","contact","rfc"];
 function showPub(v){if(pubViews.indexOf(v)<0)v="home";pubViews.forEach(function(x){document.getElementById("pub-"+x).hidden=(x!==v);});document.querySelectorAll("#pubnav a").forEach(function(a){a.classList.toggle("on",a.dataset.pub===v);});document.getElementById("pubnav").classList.remove("open");if(v==="veille")renderVeille();window.scrollTo({top:0});}
-function bindPub(){document.querySelectorAll("[data-pub]").forEach(function(b){if(b._b)return;b._b=1;b.addEventListener("click",function(){showPub(b.dataset.pub);});});}
+function bindPub(){document.querySelectorAll("[data-pub]").forEach(function(b){if(b._b)return;b._b=1;b.addEventListener("click",function(){showPub(b.dataset.pub);});});document.querySelectorAll("[data-ref]").forEach(function(b){if(b._r)return;b._r=1;b.addEventListener("click",function(e){e.preventDefault();showFiche(b.dataset.ref);});});}
 document.getElementById("hdLogo").addEventListener("click",function(){showPub("home");});
 
 renderHome();bindPub();showPub("home");
 </script>
 
-</body>
-</html>
+</body></html>
