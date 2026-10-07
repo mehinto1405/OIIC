@@ -45,8 +45,11 @@ header{border-bottom:1px solid var(--line);background:var(--bg)}
 .urg{font-size:14px;color:var(--muted)}.urg b{color:var(--navy);font-weight:700}
 .sidebox{border:1px solid var(--line);border-radius:8px;padding:18px;background:var(--alt)}
 .sidebox h3{font-size:16px;margin-bottom:10px}
-.sidebox ol{margin:0;padding-left:18px;font-size:14.5px;color:var(--text)}
-.sidebox li{margin-bottom:7px}
+.sidebox .chan{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+.sidebox .chan:first-of-type{border-top:0}
+.sidebox .cl2{color:var(--muted)}
+.sidebox .chan b{color:var(--navy)}
+.sidebox .note2{font-size:13px;color:var(--muted);margin:10px 0 0;line-height:1.45}
 
 .homeveille{padding:28px 0;border-bottom:1px solid var(--line)}
 .hv-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
@@ -162,17 +165,16 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
         <p>Le SOC national supervise et traite les incidents de cybersécurité des opérateurs d'infrastructures critiques (OIIC) et des systèmes financiers décentralisés (SFD) du Bénin. Permanence 24 h/24, 7 j/7.</p>
         <div class="cta">
           <button class="btn-red" data-pub="signaler">Déclarer un incident</button>
-          <span class="urg">Urgence : <b>+229 01 21 36 87 23</b> · soc@asin.bj</span>
+          <span class="urg">ou appelez le <b>+229 01 21 36 87 23</b> (24/7)</span>
         </div>
       </div>
       <div class="sidebox">
-        <h3>Vous subissez un incident ?</h3>
-        <ol>
-          <li>Isolez si possible le système touché.</li>
-          <li>Déclarez l'incident via le formulaire ou la ligne d'urgence.</li>
-          <li>Conservez les journaux et preuves.</li>
-          <li>Un analyste vous recontacte pour la suite.</li>
-        </ol>
+        <h3>Signaler maintenant</h3>
+        <div class="chan"><span class="cl2">Formulaire</span><a data-pub="signaler">Déclarer en ligne</a></div>
+        <div class="chan"><span class="cl2">Téléphone 24/7</span><b>+229 01 21 36 87 23</b></div>
+        <div class="chan"><span class="cl2">WhatsApp</span><b>+229 01 00 00 00 00</b></div>
+        <div class="chan"><span class="cl2">E-mail</span><b>soc@asin.bj</b></div>
+        <p class="note2">Connexion limitée ? Appelez ou écrivez sur WhatsApp — on ouvre le dossier pour vous.</p>
       </div>
     </div>
 
@@ -209,10 +211,16 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
   <div class="wrap">
     <div class="ph"><h1>Déclarer un incident</h1><p>Affectant un OIIC ou un SFD. Accessible sans compte.</p></div>
     <form id="incidentForm" class="formwrap" novalidate>
-      <div class="aside-note">Incident critique ou élevé : à notifier au SOC dans les meilleurs délais (obligation PPIIC). Les pièces jointes sont chiffrées à la transmission ; ne joignez pas de secrets en clair.</div>
       <fieldset>
-        <legend>Organisme concerné</legend>
-        <div class="frow"><div class="field full"><label for="f-org">Opérateur / SFD <span class="req">*</span></label><select id="f-org" required><option value="" selected disabled>Sélectionner…</option></select></div></div>
+        <legend>Qui déclare</legend>
+        <div class="field full" style="margin-bottom:14px"><label>Type de déclarant <span class="req">*</span></label>
+          <div class="sev-opts">
+            <label><input type="radio" name="declarant" value="OIIC" checked> Opérateur critique (OIIC)</label>
+            <label><input type="radio" name="declarant" value="SFD"> Microfinance (SFD)</label>
+            <label><input type="radio" name="declarant" value="Autre"> Autre</label>
+          </div>
+        </div>
+        <div class="frow"><div class="field full"><label for="f-org">Organisme <span class="req">*</span></label><select id="f-org" required><option value="" selected disabled>Sélectionner…</option></select></div></div>
         <div class="frow"><div class="field"><label for="f-sector">Secteur</label><input id="f-sector" readonly placeholder="Rempli automatiquement"></div><div class="field"><label for="f-contact">Point de contact <span class="req">*</span></label><input id="f-contact" required placeholder="Nom · fonction"></div></div>
       </fieldset>
       <fieldset>
@@ -311,8 +319,21 @@ function renderVeille(){
 }
 
 var fOrg=document.getElementById("f-org");
-Object.keys(SECTORS).forEach(function(sec){var og=document.createElement("optgroup");og.label=sec;SECTORS[sec].forEach(function(o){var op=document.createElement("option");op.value=o;op.textContent=o;op.dataset.sector=sec;og.appendChild(op);});fOrg.appendChild(og);});
+function fillFormOrg(mode){
+  fOrg.innerHTML='<option value="" selected disabled>Sélectionner…</option>';
+  Object.keys(SECTORS).forEach(function(sec){
+    var isS=sec.indexOf("SFD")>-1;
+    if(mode==="OIIC"&&isS)return;
+    if(mode==="SFD"&&!isS)return;
+    var og=document.createElement("optgroup");og.label=sec;
+    SECTORS[sec].forEach(function(o){var op=document.createElement("option");op.value=o;op.textContent=o;op.dataset.sector=sec;og.appendChild(op);});
+    fOrg.appendChild(og);
+  });
+  document.getElementById("f-sector").value="";
+}
+fillFormOrg("OIIC");
 fOrg.addEventListener("change",function(){document.getElementById("f-sector").value=fOrg.options[fOrg.selectedIndex].dataset.sector||"";});
+document.querySelectorAll('input[name=declarant]').forEach(function(r){r.addEventListener("change",function(){fillFormOrg(r.value);});});
 var form=document.getElementById("incidentForm");
 function padRef(){return "SOC-2026-"+String(43+Math.floor(Math.random()*40)).padStart(5,"0");}
 form.addEventListener("submit",function(e){e.preventDefault();var org=fOrg.value,type=document.getElementById("f-type").value,sev=(form.querySelector('input[name=sev]:checked')||{}).value,contact=document.getElementById("f-contact").value;if(!org||!type||!sev||!contact){form.querySelectorAll('[required]').forEach(function(x){if(!x.value)x.focus();});if(!sev)form.querySelector('input[name=sev]').focus();return;}document.getElementById("refOut").textContent=padRef();form.hidden=true;document.getElementById("confirmCard").hidden=false;window.scrollTo({top:0,behavior:"smooth"});});
