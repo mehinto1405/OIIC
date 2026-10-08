@@ -1,262 +1,329 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Plateforme SOC Bénin</title>
+<title>SOC Bénin — Portail</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Portail public du SOC — sobre et institutionnel, à l'image des vrais CSIRT (csirt.bj, cert.ssi.gouv.fr).
-   Blanc dominant, un seul bleu marine, rouge réservé au bouton « Déclarer » et au critique. Logo officiel. */
+/* Modèle calqué sur bjCSIRT (csirt.bj) et le CERT-FR : pas de hero marketing, la page s'ouvre sur le fil de
+   publications daté (date longue FR · référence · titre · statut) en liste pleine largeur par type, « Déclarer »
+   en action rouge distincte, piliers d'activité, bloc « Membre de » en pied. Marine + rouge + tricolore, logo réel.
+   Titres en serif (ton document officiel), corps Plex Sans, références Plex Mono. Clair + sombre. */
 :root{
-  --bg:#ffffff; --alt:#f6f7f9; --navy:#16305a; --navy-d:#0f2648;
-  --text:#2b3340; --muted:#6c7684; --line:#e4e7ec; --red:#c21f10;
-  --f:"Source Sans 3",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  color-scheme:light;
+  --bg:#ffffff; --paper:#f5f6f8; --ink:#13233c; --text:#232b38; --muted:#6a7383; --line:#e2e6ed;
+  --red:#c21f10; --panel:#102442; --nav:#13233c;
+  --crit:#c21f10; --high:#b26a00; --mod:#275ea6; --low:#2f7d4f;
+  --shadow:0 1px 2px rgba(16,30,54,.05); --shadow-h:0 6px 18px rgba(16,30,54,.09);
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --bj-g:#0a8a4f; --bj-y:#fbd016; --bj-r:#e11b2e;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1726; --paper:#131f32; --ink:#e9eef6; --text:#c6cedb; --muted:#909db0; --line:#223147;
+  --red:#f0675a; --panel:#0a1526; --nav:#213a5f;
+  --crit:#f0675a; --high:#e0a63a; --mod:#5f9ae6; --low:#52b47f;
+  --shadow:0 1px 2px rgba(0,0,0,.3); --shadow-h:0 8px 22px rgba(0,0,0,.45);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1726; --paper:#131f32; --ink:#e9eef6; --text:#c6cedb; --muted:#909db0; --line:#223147;
+  --red:#f0675a; --panel:#0a1526; --nav:#213a5f;
+  --crit:#f0675a; --high:#e0a63a; --mod:#5f9ae6; --low:#52b47f;
+  --shadow:0 1px 2px rgba(0,0,0,.3); --shadow-h:0 8px 22px rgba(0,0,0,.45);
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--text);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{margin:0;color:var(--navy);font-weight:700;line-height:1.25}
-a{color:var(--navy);text-decoration:none;cursor:pointer}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;font-family:var(--serif);color:var(--ink);font-weight:600;line-height:1.24;text-wrap:balance}
+a{color:var(--ink);text-decoration:none;cursor:pointer}
 a:hover{text-decoration:underline}
 [hidden]{display:none!important}
 img{max-width:100%}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
 .tri{height:3px;display:flex}.tri span{flex:1}
-.tri span:nth-child(1){background:#0a8a4f}.tri span:nth-child(2){background:#fbd016}.tri span:nth-child(3){background:#e11b2e}
-.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+.tri span:nth-child(1){background:var(--bj-g)}.tri span:nth-child(2){background:var(--bj-y)}.tri span:nth-child(3){background:var(--bj-r)}
+.util{background:var(--nav);color:#fff}
+.util .in{max-width:1060px;margin:0 auto;padding:6px 20px;display:flex;align-items:center;gap:16px;font-size:12.5px}
+.util .aff{opacity:.78}
+.util .sp{margin-left:auto;display:flex;align-items:center;gap:16px}
+.util b{font-family:var(--mono);font-weight:500}
+.tsw{position:relative;width:46px;height:24px;border:0;border-radius:999px;background:rgba(255,255,255,.22);cursor:pointer;padding:0;flex:none;transition:background .15s}
+.tsw:hover{background:rgba(255,255,255,.32)}
+.tsw[aria-checked="true"]{background:rgba(255,255,255,.42)}
+.tknob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;display:block;transition:left .15s;box-shadow:0 1px 2px rgba(0,0,0,.35)}
+.tsw[aria-checked="true"] .tknob{left:25px}
+.tlab{font-size:12px;opacity:.78}
 
-header{border-bottom:1px solid var(--line);background:var(--bg)}
-.hd{max-width:980px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:20px}
-.logo-img{height:46px;width:auto;display:block;cursor:pointer}
-.hd nav{margin-left:auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.hd nav a{color:var(--text);font-weight:600;font-size:15px;padding:7px 10px;border-radius:5px;cursor:pointer}
-.hd nav a:hover{background:var(--alt);text-decoration:none}
-.hd nav a.on{color:var(--navy);box-shadow:inset 0 -2px 0 var(--navy)}
-.menu-toggle{display:none}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.hd{max-width:1060px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:18px}
+.plate{background:#fff;border:1px solid #e2e6ed;border-radius:6px;padding:4px 8px;display:inline-flex;align-items:center;cursor:pointer}
+.plate img{height:34px;width:auto;display:block}
+.hd nav{margin-left:auto;display:flex;align-items:center;gap:2px;flex-wrap:wrap}
+.hd nav a{color:var(--text);font-weight:500;font-size:14.5px;padding:7px 10px;border-radius:5px;cursor:pointer}
+.hd nav a:hover{background:var(--paper);text-decoration:none}
+.hd nav a.on{color:var(--ink);box-shadow:inset 0 -2px 0 var(--red)}
+.hd .decl{background:var(--red);color:#fff;font-weight:600;padding:8px 14px;border-radius:6px;margin-left:8px}
+.hd .decl:hover{background:var(--red);filter:brightness(1.07);text-decoration:none}
+.hd .decl.on{box-shadow:none}
+.mtog{display:none}
 
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
 .view[hidden]{display:none!important}
 
-.intro{display:grid;grid-template-columns:1.6fr 1fr;gap:34px;padding:34px 0 30px;border-bottom:1px solid var(--line)}
-.intro h1{font-size:30px;margin-bottom:12px}
-.intro p{color:var(--text);margin:0 0 20px;max-width:58ch}
-.intro .cta{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.btn-red{background:var(--red);color:#fff;border:0;border-radius:7px;padding:12px 20px;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer}
-.btn-red:hover{background:#a81a0d}
-.urg{font-size:14px;color:var(--muted)}.urg b{color:var(--navy);font-weight:700}
-.sidebox{border:1px solid var(--line);border-radius:8px;padding:18px;background:var(--alt)}
-.sidebox h3{font-size:16px;margin-bottom:10px}
-.sidebox .chan{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
-.sidebox .chan:first-of-type{border-top:0}
-.sidebox .cl2{color:var(--muted)}
-.sidebox .chan b{color:var(--navy)}
-.sidebox .note2{font-size:13px;color:var(--muted);margin:10px 0 0;line-height:1.45}
+/* masthead (sobre, pas de hero) */
+.mast{padding:30px 0 16px}
+.eyebrow{font-size:13px;font-weight:600;color:var(--red);margin-bottom:9px}
+.mast h1{font-size:27px;line-height:1.16;margin-bottom:10px}
+.mlede{font-size:16.5px;color:var(--text);max-width:68ch;margin:0}
 
-.homeveille{padding:28px 0;border-bottom:1px solid var(--line)}
-.hv-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
-.hv-h h2{font-size:19px}
-.adv{display:block;padding:12px 0;border-top:1px solid var(--line);color:inherit}
-.adv:hover{text-decoration:none}.adv:hover .at{text-decoration:underline}
-.adv .am{font-size:13px;color:var(--muted);margin-bottom:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.adv .ref{font-variant-numeric:tabular-nums}
-.adv .at{font-size:15.5px;color:var(--navy);font-weight:600;line-height:1.35}
-.sev{font-size:12.5px;font-weight:700}
-.sev.crit{color:var(--red)}.sev.norm{color:var(--muted)}
-.cvss{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
-.more{display:inline-block;margin-top:14px;font-weight:600;font-size:14.5px}
+/* bandeau signal : menace + urgence + déclarer */
+.signal{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:14px 18px;margin-bottom:34px}
+.sig-l{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0}
+.lvl{font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.lvl::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor}
+.lvl-crit{color:var(--crit)}.lvl-high{color:var(--high)}.lvl-mod{color:var(--mod)}.lvl-low{color:var(--low)}
+.sig-d{font-size:14px;color:var(--text)}
+.sig-r{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.sig-urg{font-size:13.5px;color:var(--muted)}.sig-urg b{font-family:var(--mono);color:var(--ink);font-weight:500}
+.btn-red{background:var(--red);color:#fff;border:0;border-radius:7px;padding:10px 18px;font-family:var(--sans);font-weight:600;font-size:15px;cursor:pointer}
+.btn-red:hover{filter:brightness(1.06)}
+.btn-ghost{background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:10px 16px;font-family:var(--sans);font-weight:600;font-size:15px;cursor:pointer}
+.btn-ghost:hover{background:var(--paper)}
 
-.missions{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;padding:30px 0;border-bottom:1px solid var(--line)}
-.missions h3{font-size:17px;margin-bottom:6px}
-.missions p{color:var(--text);margin:0;font-size:15px}
-.about{padding:26px 0;color:var(--text)}
-.about h2{font-size:19px;margin-bottom:8px}
-.about p{max-width:72ch;margin:0 0 12px}
-.affil{font-size:14px;color:var(--muted)}.affil b{color:var(--text)}
+/* sections de publications (modèle CERT-FR) */
+.pubsec{margin-bottom:34px}
+.psec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:4px}
+.psec-h h2{font-size:19px}
+.psec-h .vt{font-size:13px;font-weight:600;color:var(--red)}
+.psec-intro{font-size:14px;color:var(--muted);margin:10px 0 2px}
+.publist{display:flex;flex-direction:column}
+.pub{display:grid;grid-template-columns:138px 180px 1fr auto;gap:18px;align-items:baseline;padding:12px 4px;border-top:1px solid var(--line);color:inherit}
+.pub:first-child{border-top:0}
+.pub:hover{background:var(--paper);text-decoration:none}
+.pub .pdate{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pub .pref{font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
+.pub .ptitle{font-size:15.5px;color:var(--ink);font-weight:500;line-height:1.35}
+.pub:hover .ptitle{color:var(--red)}
+.sdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:9px;vertical-align:middle;background:var(--muted);flex:none}
+.pub.s-crit .sdot{background:var(--crit)}.pub.s-high .sdot{background:var(--high)}.pub.s-mod .sdot{background:var(--mod)}.pub.s-low .sdot{background:var(--low)}
+.pub .pmeta{font-size:12.5px;color:var(--muted);white-space:nowrap;font-family:var(--mono)}
+@media (max-width:720px){
+  .pub{grid-template-columns:1fr auto;gap:4px 12px}
+  .pub .pdate{grid-row:1;order:1}
+  .pub .pref{grid-row:1;grid-column:2;order:2;text-align:right}
+  .pub .ptitle{grid-row:2;grid-column:1/-1;order:3;margin-top:2px}
+  .pub .pmeta{grid-row:3;grid-column:1/-1;order:4}
+}
 
-.ph{padding:26px 0 8px}
-.ph h1{font-size:26px;margin-bottom:4px}.ph p{color:var(--muted);margin:0}
-.filters{display:flex;gap:8px;flex-wrap:wrap;padding:14px 0}
-.filters button{border:1px solid var(--line);background:var(--bg);color:var(--muted);font-family:inherit;font-weight:600;font-size:14px;padding:6px 13px;border-radius:6px;cursor:pointer}
-.filters button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-.listwrap{padding-bottom:40px}
-.lrow{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-top:1px solid var(--line)}
-.lrow:last-child{border-bottom:1px solid var(--line)}
-.lrow .ld{font-size:13.5px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;min-width:92px}
-.lrow .lt{font-size:16px;color:var(--navy);font-weight:600}
-.lrow .lr{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
-.lrow .lx{margin-left:auto;white-space:nowrap}
+/* piliers */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:8px}
+.pillars > div{padding:20px 20px 20px 0;border-right:1px solid var(--line)}
+.pillars > div:last-child{border-right:0;padding-right:0}
+.pillars h3{font-size:16px;margin-bottom:5px}
+.pillars p{margin:0;font-size:14px;color:var(--text)}
 
-.formwrap{padding:22px 0 44px;max-width:720px}
-fieldset{border:0;margin:0 0 22px;padding:0}
-legend{font-size:14px;font-weight:700;color:var(--navy);padding:0 0 12px;border-bottom:1px solid var(--line);width:100%;margin-bottom:14px}
+.about{padding:30px 0;border-top:1px solid var(--line);margin-top:30px}
+.about h2{font-size:20px;margin-bottom:10px}
+.about p{max-width:74ch;margin:0 0 12px;color:var(--text)}
+.about .more{font-size:14.5px;font-weight:600;color:var(--red)}
+
+.members{display:flex;align-items:center;gap:10px 22px;flex-wrap:wrap;padding:20px 0 6px;border-top:1px solid var(--line)}
+.members .ml{font-size:12px;font-weight:700;letter-spacing:.3px;color:var(--muted);text-transform:uppercase}
+.members a{font-weight:600;font-size:14.5px;color:var(--ink)}
+
+/* section headers génériques */
+.ph{padding:30px 0 6px}
+.ph h1{font-size:27px;margin-bottom:5px}
+.ph p{color:var(--muted);margin:0;font-size:15px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:16px 0 6px}
+.chips button{border:1px solid var(--line);background:var(--bg);color:var(--muted);font-family:var(--sans);font-weight:600;font-size:13.5px;padding:6px 13px;border-radius:999px;cursor:pointer}
+.chips button.on{background:var(--nav);color:#fff;border-color:var(--nav)}
+
+/* fiche */
+.fiche{max-width:760px;padding:16px 0 46px}
+.fiche .back{display:inline-block;margin-bottom:16px;font-size:14px;color:var(--red);font-weight:600}
+.fiche .fhead{border-left:4px solid var(--line);padding-left:18px;margin-bottom:22px}
+.fiche.s-crit .fhead{border-left-color:var(--crit)}.fiche.s-high .fhead{border-left-color:var(--high)}.fiche.s-mod .fhead{border-left-color:var(--mod)}.fiche.s-low .fhead{border-left-color:var(--low)}
+.fiche h1{font-size:25px;margin:4px 0 10px}
+.fiche .fmeta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted)}
+.fiche .ftype{font-size:11px;font-weight:700;color:#fff;background:var(--nav);padding:2px 9px;border-radius:5px}
+.fiche .fmeta .fsev{font-weight:700}
+.fiche.s-crit .fsev{color:var(--crit)}.fiche.s-high .fsev{color:var(--high)}.fiche.s-mod .fsev{color:var(--mod)}.fiche.s-low .fsev{color:var(--low)}
+.fiche h3{font-size:16px;margin:22px 0 5px}
+.fiche p{margin:0 0 10px;font-size:15.5px;color:var(--text)}
+.fiche .fref{display:block;font-size:14.5px;margin-bottom:5px;color:var(--red)}
+
+/* form */
+.formwrap{padding:20px 0 46px;max-width:720px}
+fieldset{border:0;margin:0 0 24px;padding:0}
+legend{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);padding:0 0 10px;border-bottom:1px solid var(--line);width:100%;margin-bottom:14px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}
 label{font-size:14px;font-weight:600;color:var(--text)}label .req{color:var(--red)}
-input,select,textarea{font-family:inherit;font-size:15px;color:var(--text);background:var(--bg);border:1px solid #cfd5de;border-radius:6px;padding:9px 11px;width:100%}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-offset:0;border-color:var(--navy)}
+input,select,textarea{font-family:var(--sans);font-size:15px;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:var(--ink)}
 textarea{resize:vertical;min-height:100px}
-.hint{font-size:13px;color:var(--muted)}
-.sev-opts{display:flex;gap:18px;flex-wrap:wrap}
-.sev-opts label{display:flex;align-items:center;gap:7px;font-weight:600;cursor:pointer}
-.drop{border:1px dashed #cfd5de;border-radius:6px;padding:16px;text-align:center;color:var(--muted);font-size:14px;background:var(--alt);cursor:pointer}
+.optline{display:flex;gap:18px;flex-wrap:wrap}
+.optline label{display:flex;align-items:center;gap:7px;font-weight:500;cursor:pointer}
+.drop{border:1px dashed var(--line);border-radius:6px;padding:16px;text-align:center;color:var(--muted);font-size:14px;background:var(--paper);cursor:pointer}
 .actions{display:flex;gap:12px;align-items:center;margin-top:8px}
-.btn{border:0;border-radius:7px;padding:11px 20px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
-.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy-d)}
-.btn-ln{background:none;border:0;color:var(--muted);font-family:inherit;font-size:15px;cursor:pointer}
-.aside-note{background:var(--alt);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:0 6px 6px 0;padding:12px 14px;font-size:14px;margin-bottom:20px}
-.confirm{text-align:center;padding:40px 0;max-width:520px}
-.confirm .ok{font-size:40px;color:#1f8a4c}
-.confirm h2{font-size:22px;margin:8px 0}.confirm p{color:var(--muted)}
-.refb{display:inline-block;margin:14px 0;font-size:19px;font-weight:700;color:var(--navy);background:var(--alt);border:1px solid var(--line);padding:9px 18px;border-radius:7px;font-variant-numeric:tabular-nums}
+.btn{border:0;border-radius:7px;padding:11px 20px;font-family:var(--sans);font-weight:600;font-size:15px;cursor:pointer}
+.btn-ink{background:var(--nav);color:#fff}.btn-ln{background:none;border:0;color:var(--muted);font-family:inherit;font-size:15px;cursor:pointer}
+.confirm{text-align:center;padding:44px 0;max-width:520px}
+.confirm .ok{font-size:42px;color:var(--low)}
+.confirm h2{font-size:22px;margin:10px 0}.confirm p{color:var(--muted)}
+.refb{display:inline-block;margin:14px 0;font-family:var(--mono);font-size:19px;font-weight:600;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:9px 18px;border-radius:7px}
 
-.track{display:flex;gap:10px;flex-wrap:wrap;padding:18px 0}
-.track input{max-width:260px}
+.track{display:flex;gap:10px;flex-wrap:wrap;padding:18px 0}.track input{max-width:260px}
 .tl{list-style:none;margin:0;padding:0;max-width:620px}
-.tl li{display:grid;grid-template-columns:18px 1fr;gap:14px;padding-bottom:18px;position:relative}
-.tl li:not(:last-child)::before{content:"";position:absolute;left:8px;top:20px;bottom:0;width:1px;background:var(--line)}
-.dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);background:var(--bg);margin-top:2px;z-index:1}
-.dot.done{background:var(--navy);border-color:var(--navy)}.dot.now{background:var(--red);border-color:var(--red)}
+.tl li{display:grid;grid-template-columns:16px 1fr;gap:14px;padding-bottom:18px;position:relative}
+.tl li:not(:last-child)::before{content:"";position:absolute;left:7px;top:18px;bottom:0;width:1px;background:var(--line)}
+.dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:var(--bg);margin-top:3px;z-index:1}
+.dot.done{background:var(--ink);border-color:var(--ink)}.dot.now{background:var(--red);border-color:var(--red)}
 .tl b{display:block;font-size:15px;color:var(--text)}.tl span{font-size:13px;color:var(--muted)}
 
-.cl{display:flex;gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line)}
+.cl{display:flex;gap:12px;align-items:baseline;padding:12px 0;border-top:1px solid var(--line)}
 .cl .k{font-size:13px;color:var(--muted);min-width:120px}
-.cl .v{font-weight:600;color:var(--navy)}
+.cl .v{font-weight:600;color:var(--ink)}
 .cl .cp{margin-left:auto;border:1px solid var(--line);background:var(--bg);color:var(--muted);font-family:inherit;font-size:12.5px;padding:3px 9px;border-radius:5px;cursor:pointer}
 
-/* rfc 2350 */
-.rfc{max-width:760px;padding:8px 0 44px}
-.rfc .docinfo{font-size:13px;color:var(--muted);background:var(--alt);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin-bottom:22px}
-.rfc h2{font-size:17px;margin:26px 0 8px;padding-top:18px;border-top:1px solid var(--line)}
-.rfc h2:first-of-type{border-top:0;padding-top:0;margin-top:0}
-.rfc h3{font-size:14.5px;color:var(--navy);margin:14px 0 3px}
-.rfc p{margin:0 0 10px;font-size:15px}
-.rfc ul{margin:4px 0 10px;padding-left:20px;font-size:15px}
-.rfc li{margin-bottom:4px}
-.rfc .kv{display:flex;gap:14px;padding:7px 0;font-size:14.5px;border-bottom:1px solid var(--line)}
-.rfc .kv:last-child{border-bottom:0}
-.rfc .kv .k{color:var(--muted);min-width:190px;flex:none}
-.rfc .todo{color:var(--red);font-style:italic}
-
-/* fiche alerte / avis */
-.fiche{max-width:740px;padding:8px 0 44px}
-.fiche .back{display:inline-block;margin-bottom:14px;font-size:14px}
-.fiche h1{font-size:24px;margin-bottom:10px}
-.fiche .fmeta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:16px;font-size:13.5px;color:var(--muted)}
-.fiche .ftag{background:var(--navy);color:#fff;font-size:12px;font-weight:700;padding:2px 9px;border-radius:5px}
-.fiche h3{font-size:15px;margin:18px 0 4px}
-.fiche p{margin:0 0 10px;font-size:15px}
-.fiche .fref{display:block;font-size:14.5px;margin-bottom:5px}
-
-/* coopération */
-.coop{padding:8px 0 44px}
+.coop{padding:10px 0 46px}
 .coop h2{font-size:18px;margin:26px 0 8px;padding-top:18px;border-top:1px solid var(--line)}
 .coop h2:first-of-type{border-top:0;padding-top:0;margin-top:0}
 .coop .sub{color:var(--muted);font-size:14px;margin:0 0 6px}
-.coop .lk{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);text-decoration:none}
-.coop .lk:last-of-type{border-bottom:0}
-.coop .lk:hover{text-decoration:none;background:var(--alt)}
-.coop .lk .nm{font-weight:600;color:var(--navy);min-width:230px}
-.coop .lk:hover .nm{text-decoration:underline}
+.coop .lk{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line)}
+.coop .lk:last-of-type{border-bottom:0}.coop .lk:hover{background:var(--paper);text-decoration:none}
+.coop .lk .nm{font-weight:600;color:var(--ink);min-width:230px}
 .coop .lk .ds{color:var(--muted);font-size:14px}
 @media (max-width:560px){.coop .lk{flex-direction:column;gap:2px}.coop .lk .nm{min-width:0}}
 
-footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
-.fin{max-width:980px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:26px}
-.fin h5{font-size:13px;color:var(--muted);margin:0 0 10px;font-weight:700}
+.rfc{max-width:760px;padding:10px 0 46px}
+.rfc .docinfo{font-size:13px;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin-bottom:22px}
+.rfc h2{font-size:17px;margin:26px 0 8px;padding-top:18px;border-top:1px solid var(--line)}
+.rfc h2:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.rfc h3{font-size:15px;margin:14px 0 3px}
+.rfc p{margin:0 0 10px;font-size:15px;color:var(--text)}
+.rfc .kv{display:flex;gap:14px;padding:7px 0;font-size:14.5px;border-bottom:1px solid var(--line)}
+.rfc .kv:last-child{border-bottom:0}
+.rfc .kv .k{color:var(--muted);min-width:190px;flex:none}
+.rfc .todo{color:var(--red)}
+
+footer{border-top:1px solid var(--line);background:var(--paper);margin-top:16px}
+.fin{max-width:1060px;margin:0 auto;padding:30px 20px;display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:26px}
+.fin h5{font-family:var(--sans);font-size:12px;color:var(--muted);margin:0 0 10px;font-weight:700;letter-spacing:.3px}
 .fin a,.fin p{display:block;font-size:14px;margin-bottom:6px;color:var(--text)}
-.fin .fl{height:40px;margin-bottom:10px}
+.fin .plate{margin-bottom:12px}
 .fbot{border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--muted);padding:12px 20px}
 
 @media (max-width:820px){
-  .hd nav{display:none;order:3;width:100%;flex-direction:column;align-items:stretch;gap:0;margin:8px -20px -12px;border-top:1px solid var(--line)}
+  .hd nav{display:none;order:3;width:100%;flex-direction:column;align-items:stretch;gap:0;margin:8px -20px -11px;border-top:1px solid var(--line)}
   .hd nav.open{display:flex}
   .hd nav a{padding:12px 20px;border-bottom:1px solid var(--line);border-radius:0}
-  .hd nav a.on{box-shadow:none;background:var(--alt)}
-  .menu-toggle{display:block;margin-left:auto;border:1px solid var(--line);background:var(--bg);font-size:20px;padding:5px 11px;border-radius:6px;cursor:pointer;color:var(--navy)}
-  .intro,.missions,.frow{grid-template-columns:1fr;gap:24px}
+  .hd nav a.on{box-shadow:none;background:var(--paper)}
+  .hd nav .decl{margin:0;border-radius:0;color:#fff}
+  .mtog{display:block;margin-left:auto;border:1px solid var(--line);background:var(--bg);font-size:20px;padding:5px 11px;border-radius:6px;cursor:pointer;color:var(--ink)}
+  .pillars{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
   .fin{grid-template-columns:1fr 1fr}
+  .util .aff{display:none}
 }
-@media (max-width:460px){.frow{grid-template-columns:1fr}.fin{grid-template-columns:1fr}}
+@media (max-width:460px){.pillars{grid-template-columns:1fr}.pillars > div{border-right:0;border-bottom:1px solid var(--line);padding:16px 0}.fin{grid-template-columns:1fr}.mast h1{font-size:23px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 <div class="tri"><span></span><span></span><span></span></div>
-<header>
-  <div class="hd">
-    <img src="soc-logo.jpg" alt="SOC — Centre de supervision et de réponse aux incidents des OIIC & SFD" class="logo-img" id="hdLogo">
-    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
-    <nav id="pubnav">
-      <a data-pub="home" class="on">Accueil</a>
-      <a data-pub="veille">Alertes</a>
-      <a data-pub="signaler">Déclarer un incident</a>
-      <a data-pub="suivi">Suivi</a>
-      <a data-pub="cooperation">Coopération</a>
-      <a data-pub="contact">Contact</a>
-    </nav>
-  </div>
-</header>
+<div class="util"><div class="in">
+  <span class="aff">Membre de FIRST · AfricaCERT · ANCA · Trustbroker Africa</span>
+  <span class="sp"><span>Urgence 24/7 <b>+229 01 21 36 87 23</b></span><span class="tlab">Clair</span><button class="tsw" id="themeBtn" role="switch" aria-checked="false" aria-label="Basculer le thème clair / sombre"><span class="tknob"></span></button><span class="tlab">Sombre</span></span>
+</div></div>
+<header><div class="hd">
+  <span class="plate" id="hdLogo"><img src="soc-logo.jpg" alt="SOC — Centre de supervision et de réponse aux incidents des OIIC & SFD"></span>
+  <button class="mtog" id="mtog" aria-label="Menu">☰</button>
+  <nav id="nav">
+    <a data-pub="home" class="on">Accueil</a>
+    <a data-pub="veille" data-filter="ale">Alertes</a>
+    <a data-pub="veille" data-filter="avi">Avis</a>
+    <a data-pub="suivi">Suivi</a>
+    <a data-pub="cooperation">Coopération</a>
+    <a data-pub="contact">Contact</a>
+    <a data-pub="signaler" class="decl">Déclarer un incident</a>
+  </nav>
+</div></header>
 
 <!-- HOME -->
 <section class="view" id="pub-home">
   <div class="wrap">
-    <div class="intro">
-      <div>
-        <h1>Centre de supervision et de réponse aux incidents</h1>
-        <p>Le SOC national supervise et traite les incidents de cybersécurité des opérateurs d'infrastructures critiques (OIIC) et des systèmes financiers décentralisés (SFD) du Bénin. Permanence 24 h/24, 7 j/7.</p>
-        <div class="cta">
-          <button class="btn-red" data-pub="signaler">Déclarer un incident</button>
-          <span class="urg">ou appelez le <b>+229 01 21 36 87 23</b> (24/7)</span>
-        </div>
-      </div>
-      <div class="sidebox">
-        <h3>Signaler maintenant</h3>
-        <div class="chan"><span class="cl2">Formulaire</span><a data-pub="signaler">Déclarer en ligne</a></div>
-        <div class="chan"><span class="cl2">Téléphone 24/7</span><b>+229 01 21 36 87 23</b></div>
-        <div class="chan"><span class="cl2">WhatsApp</span><b>+229 01 00 00 00 00</b></div>
-        <div class="chan"><span class="cl2">E-mail</span><b>soc@asin.bj</b></div>
-      </div>
+    <div class="mast">
+      <div class="eyebrow">Centre national de supervision · OIIC & SFD</div>
+      <h1>Alertes, avis de sécurité et déclaration d'incident</h1>
+      <p class="mlede">Point de contact des opérateurs d'infrastructures critiques et des institutions de microfinance du Bénin pour la supervision, l'alerte et la réponse à incident. Cadre PPIIC (Décret 2023-060), en articulation avec le bjCSIRT.</p>
     </div>
 
-    <div class="homeveille">
-      <div class="hv-h"><h2>Dernières alertes</h2><a class="more" data-pub="veille">Voir toutes les alertes →</a></div>
-      <div id="homeVeilleList"></div>
+    <div class="signal">
+      <div class="sig-l"><span class="lvl lvl-high">Niveau de menace : Élevé</span><span class="sig-d">Rançongiciel actif sur des passerelles VPN exposées.</span></div>
+      <div class="sig-r"><span class="sig-urg">Urgence 24/7 · <b>+229 01 21 36 87 23</b></span><button class="btn-red" data-pub="signaler">Déclarer un incident</button></div>
     </div>
 
-    <div class="missions">
-      <div><h3>Supervision</h3><p>Surveillance et détection continues sur le périmètre des opérateurs critiques et des institutions de microfinance.</p></div>
-      <div><h3>Réponse à incident</h3><p>Qualification, coordination et traitement des incidents déclarés, jusqu'à leur clôture.</p></div>
-      <div><h3>Alertes aux opérateurs</h3><p>Diffusion des alertes et avis de sécurité aux organismes raccordés.</p></div>
+    <div class="pubsec">
+      <div class="psec-h"><h2>Dernières alertes</h2><a class="vt" data-pub="veille" data-filter="ale">Toutes les alertes →</a></div>
+      <p class="psec-intro">Menaces et vulnérabilités activement exploitées, à traiter en priorité.</p>
+      <div class="publist" id="homeAle"></div>
+    </div>
+
+    <div class="pubsec">
+      <div class="psec-h"><h2>Derniers avis de sécurité</h2><a class="vt" data-pub="veille" data-filter="avi">Tous les avis →</a></div>
+      <p class="psec-intro">Vulnérabilités publiées avec les correctifs et mesures associés.</p>
+      <div class="publist" id="homeAvi"></div>
+    </div>
+
+    <div class="pillars">
+      <div><h3>Supervision</h3><p>Surveillance et détection continues sur le périmètre des OIIC et des SFD.</p></div>
+      <div><h3>Réponse à incident</h3><p>Qualification, coordination et traitement des incidents déclarés.</p></div>
+      <div><h3>Alertes & avis</h3><p>Diffusion des alertes et avis de sécurité aux organismes raccordés.</p></div>
+      <div><h3>Coopération</h3><p>Échange avec le bjCSIRT et les réseaux de confiance régionaux.</p></div>
     </div>
 
     <div class="about">
-      <h2>À propos</h2>
-      <p>Le centre est le point de contact des opérateurs d'infrastructures critiques et des institutions de microfinance en cas d'incident de sécurité informatique. Il assure la surveillance, l'alerte et la coordination de la réponse, dans le cadre de la Politique de Protection des Infrastructures d'Information Critiques (PPIIC, Décret 2023-060) et en articulation avec le bjCSIRT.</p>
-      <p class="affil"><b>Affiliations :</b> FIRST · AfricaCERT · bjCSIRT</p>
+      <h2>À propos du centre</h2>
+      <p>Le centre est le point de contact des opérateurs d'infrastructures critiques et des institutions de microfinance en cas d'incident de sécurité informatique. Il assure la surveillance, l'alerte et la coordination de la réponse, dans le cadre de la PPIIC (Décret 2023-060) et en articulation avec le bjCSIRT, CSIRT national opéré par l'ASIN.</p>
+      <a class="more" data-pub="rfc">Description de service (RFC 2350) →</a>
+    </div>
+
+    <div class="members">
+      <span class="ml">Membre de</span>
+      <a href="https://www.first.org" target="_blank" rel="noopener">FIRST</a>
+      <a href="https://www.africacert.org" target="_blank" rel="noopener">AfricaCERT</a>
+      <a href="https://anca-cert.com" target="_blank" rel="noopener">ANCA</a>
+      <a href="https://www.trustbroker.africa" target="_blank" rel="noopener">Trustbroker Africa</a>
     </div>
   </div>
 </section>
 
-<!-- VEILLE & ALERTES -->
+<!-- PUBLICATIONS -->
 <section class="view" id="pub-veille" hidden>
   <div class="wrap">
-    <div class="ph"><h1>Alertes</h1><p>Vulnérabilités et menaces publiées par le centre. Aucune information sur les incidents en cours de traitement.</p></div>
-    <div class="filters" id="veFilters"></div>
-    <div class="listwrap" id="veList"></div>
+    <div class="ph"><h1 id="veTitle">Alertes</h1><p>Publications du centre. Aucune information sur les incidents en cours de traitement n'est exposée publiquement.</p></div>
+    <div class="chips" id="veFilters"></div>
+    <div class="publist" id="veList" style="margin-top:10px;padding-bottom:44px"></div>
   </div>
 </section>
 
-<!-- FICHE ALERTE / AVIS -->
+<!-- FICHE -->
 <section class="view" id="pub-fiche" hidden>
-  <div class="wrap"><div class="fiche" id="ficheBody"></div></div>
+  <div class="wrap"><div id="ficheBody"></div></div>
 </section>
 
 <!-- SIGNALER -->
 <section class="view" id="pub-signaler" hidden>
   <div class="wrap">
-    <div class="ph"><h1>Déclarer un incident</h1><p>Affectant un OIIC ou un SFD. Accessible sans compte.</p></div>
+    <div class="ph"><h1>Déclarer un incident</h1><p>Affectant un OIIC ou un SFD. Accessible sans compte. En cas d'urgence, appelez le +229 01 21 36 87 23.</p></div>
     <form id="incidentForm" class="formwrap" novalidate>
       <fieldset>
         <legend>Qui déclare</legend>
         <div class="field full" style="margin-bottom:14px"><label>Type de déclarant <span class="req">*</span></label>
-          <div class="sev-opts">
+          <div class="optline">
             <label><input type="radio" name="declarant" value="OIIC" checked> Opérateur critique (OIIC)</label>
             <label><input type="radio" name="declarant" value="SFD"> Microfinance (SFD)</label>
             <label><input type="radio" name="declarant" value="Autre"> Autre</label>
@@ -272,7 +339,7 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
           <div class="field"><label for="f-detected">Date & heure de détection <span class="req">*</span></label><input id="f-detected" type="datetime-local" required></div>
         </div>
         <div class="field full" style="margin-bottom:14px"><label>Criticité estimée <span class="req">*</span></label>
-          <div class="sev-opts">
+          <div class="optline">
             <label><input type="radio" name="sev" value="Faible"> Faible</label>
             <label><input type="radio" name="sev" value="Modéré"> Modéré</label>
             <label><input type="radio" name="sev" value="Élevé"> Élevé</label>
@@ -292,7 +359,7 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
       <div class="ok">✓</div><h2>Signalement transmis</h2>
       <p>Enregistré et transmis au SOC. Conservez la référence pour suivre le traitement.</p>
       <div class="refb" id="refOut">SOC-2026-00000</div>
-      <div class="actions" style="justify-content:center"><button class="btn btn-navy" id="newReport">Nouveau signalement</button><button class="btn-ln" data-pub="suivi">Suivre ce signalement</button></div>
+      <div class="actions" style="justify-content:center"><button class="btn btn-ink" id="newReport">Nouveau signalement</button><button class="btn-ln" data-pub="suivi">Suivre ce signalement</button></div>
     </div>
   </div>
 </section>
@@ -301,9 +368,9 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 <section class="view" id="pub-suivi" hidden>
   <div class="wrap">
     <div class="ph"><h1>Suivi d'un signalement</h1><p>Saisissez votre référence pour consulter l'avancement.</p></div>
-    <div class="track"><input id="trackInput" placeholder="SOC-2026-00042" aria-label="Référence"><button class="btn btn-navy" id="trackBtn">Rechercher</button></div>
-    <div style="max-width:620px;padding-bottom:40px">
-      <p style="color:var(--muted);font-size:14px;margin-top:0"><span id="trackRef" style="font-weight:700;color:var(--navy)">SOC-2026-00042</span> · Opérateur du secteur Finance · Rançongiciel · détecté le 03/10/2026</p>
+    <div class="track"><input id="trackInput" placeholder="SOC-2026-00042" aria-label="Référence"><button class="btn btn-ink" id="trackBtn">Rechercher</button></div>
+    <div style="max-width:620px;padding-bottom:46px">
+      <p style="color:var(--muted);font-size:14px;margin-top:0"><span id="trackRef" class="mono" style="font-weight:600;color:var(--ink)">SOC-2026-00042</span> · Opérateur du secteur Finance · Rançongiciel · détecté le 03/10/2026</p>
       <ul class="tl">
         <li><span class="dot done"></span><div><b>Signalement reçu</b><span>03/10/2026 · 21:48</span></div></li>
         <li><span class="dot done"></span><div><b>Qualifié « Élevé » par l'analyste de permanence</b><span>03/10/2026 · 23:10</span></div></li>
@@ -318,11 +385,11 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 <!-- CONTACT -->
 <section class="view" id="pub-contact" hidden>
   <div class="wrap">
-    <div class="ph"><h1>Contact</h1><p>En cas d'urgence, appelez.</p></div>
-    <div style="max-width:560px;padding:22px 0 44px">
-      <div class="cl" style="border-top:0"><span class="k">Urgence 24/7</span><span class="v">+229 01 21 36 87 23</span><button class="cp" data-copy="+229 01 21 36 87 23">Copier</button></div>
-      <div class="cl"><span class="k">E-mail</span><span class="v">soc@asin.bj</span><button class="cp" data-copy="soc@asin.bj">Copier</button></div>
-      <div class="cl"><span class="k">WhatsApp</span><span class="v">+229 01 00 00 00 00</span><button class="cp" data-copy="whatsapp">Copier</button></div>
+    <div class="ph"><h1>Contact</h1><p>En cas d'urgence, appelez — n'attendez pas le formulaire.</p></div>
+    <div style="max-width:560px;padding:22px 0 46px">
+      <div class="cl" style="border-top:0"><span class="k">Urgence 24/7</span><span class="v mono">+229 01 21 36 87 23</span><button class="cp" data-copy="+229 01 21 36 87 23">Copier</button></div>
+      <div class="cl"><span class="k">E-mail</span><span class="v mono">soc@asin.bj</span><button class="cp" data-copy="soc@asin.bj">Copier</button></div>
+      <div class="cl"><span class="k">WhatsApp</span><span class="v mono">+229 01 00 00 00 00</span><button class="cp" data-copy="whatsapp">Copier</button></div>
       <div class="cl"><span class="k">Formulaire</span><span class="v"><a data-pub="signaler">Déclarer un incident</a></span></div>
       <div class="cl"><span class="k">Adresse</span><span class="v">ASIN · Cotonou, Bénin</span></div>
     </div>
@@ -332,15 +399,14 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 <!-- COOPÉRATION -->
 <section class="view" id="pub-cooperation" hidden>
   <div class="wrap">
-    <div class="ph"><h1>Coopération & partenaires</h1><p>Affiliations, partenaires nationaux et cadre réglementaire du centre.</p></div>
+    <div class="ph"><h1>Coopération & partenaires</h1><p>Affiliations, partenaires nationaux et cadre réglementaire.</p></div>
     <div class="coop">
       <h2>Affiliations internationales</h2>
       <p class="sub">Réseaux de confiance auxquels le centre participe.</p>
       <a class="lk" href="https://www.first.org" target="_blank" rel="noopener"><span class="nm">FIRST</span><span class="ds">Forum of Incident Response and Security Teams</span></a>
       <a class="lk" href="https://www.africacert.org" target="_blank" rel="noopener"><span class="nm">AfricaCERT</span><span class="ds">Communauté des CSIRT du continent africain</span></a>
-      <a class="lk" href="https://anca-cert.com" target="_blank" rel="noopener"><span class="nm">ANCA</span><span class="ds">Africa Network of CERTs / Alliance régionale</span></a>
+      <a class="lk" href="https://anca-cert.com" target="_blank" rel="noopener"><span class="nm">ANCA</span><span class="ds">Africa Network of CERTs</span></a>
       <a class="lk" href="https://www.trustbroker.africa" target="_blank" rel="noopener"><span class="nm">Trustbroker Africa</span><span class="ds">Réseau de confiance et d'échange d'information</span></a>
-
       <h2>Partenaires nationaux</h2>
       <p class="sub">Institutions avec lesquelles le centre coopère au Bénin.</p>
       <a class="lk" href="https://csirt.bj" target="_blank" rel="noopener"><span class="nm">bjCSIRT</span><span class="ds">CSIRT national — socle avec lequel le centre s'articule</span></a>
@@ -348,14 +414,12 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
       <a class="lk" href="https://numerique.gouv.bj/" target="_blank" rel="noopener"><span class="nm">Ministère du Numérique</span><span class="ds">numerique.gouv.bj</span></a>
       <a class="lk" href="https://finances.bj" target="_blank" rel="noopener"><span class="nm">Ministère de l'Économie et des Finances</span><span class="ds">finances.bj — tutelle des SFD</span></a>
       <span class="lk"><span class="nm">Police Républicaine</span><span class="ds">Coopération judiciaire sur la cybercriminalité</span></span>
-
       <h2>Cadre réglementaire</h2>
       <p class="sub">Textes de référence applicables.</p>
       <a class="lk" href="https://sgg.gouv.bj/doc/loi-2017-20/" target="_blank" rel="noopener"><span class="nm">Code du numérique</span><span class="ds">Loi n°2017-20 portant code du numérique en République du Bénin</span></a>
       <a class="lk" href="https://innovation.gouv.bj/assets/documents/regles-de-politique-de-protection-des-infrastructures-dinformation-critiques-en-republique-du-benin.pdf" target="_blank" rel="noopener"><span class="nm">Règles PPIIC</span><span class="ds">Protection des infrastructures d'information critiques (Décret 2023-060)</span></a>
-      <a class="lk" href="https://www.coe.int/en/web/conventions/full-list/-/conventions/treaty/185" target="_blank" rel="noopener"><span class="nm">Convention de Budapest</span><span class="ds">Convention du Conseil de l'Europe sur la cybercriminalité</span></a>
+      <a class="lk" href="https://www.coe.int/en/web/conventions/full-list/-/conventions/treaty/185" target="_blank" rel="noopener"><span class="nm">Convention de Budapest</span><span class="ds">Conseil de l'Europe — cybercriminalité</span></a>
       <a class="lk" href="https://au.int/en/treaties/african-union-convention-cyber-security-and-personal-data-protection" target="_blank" rel="noopener"><span class="nm">Convention de l'UA (Malabo)</span><span class="ds">Cybersécurité et protection des données personnelles</span></a>
-      <a class="lk" href="https://www.internetsociety.org/resources/doc/2017/internet-infrastructure-security-guidelines-for-africa/" target="_blank" rel="noopener"><span class="nm">Infrastructure Security Guidelines for Africa</span><span class="ds">Internet Society — bonnes pratiques régionales</span></a>
     </div>
   </div>
 </section>
@@ -363,124 +427,106 @@ footer{border-top:1px solid var(--line);background:var(--alt);margin-top:10px}
 <!-- RFC 2350 -->
 <section class="view" id="pub-rfc" hidden>
   <div class="wrap">
-    <div class="ph"><h1>RFC 2350 — Description de service</h1><p>Présentation normalisée du CSIRT-OIIC/SFD, selon le modèle RFC 2350.</p></div>
+    <div class="ph"><h1>RFC 2350 — Description de service</h1><p>Présentation normalisée du CSIRT-OIIC/SFD.</p></div>
     <div class="rfc">
       <div class="docinfo">Document public · version 0.1 (brouillon) · dernière mise à jour : 7 octobre 2026.</div>
-
       <h2>1. Informations sur le document</h2>
       <div class="kv"><span class="k">1.1 Dernière mise à jour</span><span>7 octobre 2026 (v0.1)</span></div>
-      <div class="kv"><span class="k">1.2 Liste de diffusion</span><span>Aucune liste de notification à ce jour ; les mises à jour sont publiées sur le site.</span></div>
-      <div class="kv"><span class="k">1.3 Emplacement du document</span><span>https://soc.asin.bj/rfc2350 <span class="todo">★</span></span></div>
-      <div class="kv"><span class="k">1.4 Authentification</span><span>Ce document est signé avec la clé PGP du CSIRT-OIIC/SFD <span class="todo">★</span>.</span></div>
-
+      <div class="kv"><span class="k">1.2 Liste de diffusion</span><span>Aucune à ce jour ; mises à jour publiées sur le site.</span></div>
+      <div class="kv"><span class="k">1.3 Emplacement</span><span>https://soc.asin.bj/rfc2350 <span class="todo">★</span></span></div>
+      <div class="kv"><span class="k">1.4 Authentification</span><span>Signé avec la clé PGP du CSIRT-OIIC/SFD <span class="todo">★</span>.</span></div>
       <h2>2. Coordonnées</h2>
       <div class="kv"><span class="k">2.1 Nom de l'équipe</span><span>CSIRT-OIIC/SFD — Centre de supervision et de réponse aux incidents des OIIC & SFD du Bénin.</span></div>
       <div class="kv"><span class="k">2.2 Adresse</span><span>ASIN, Cotonou, Bénin <span class="todo">★</span></span></div>
       <div class="kv"><span class="k">2.3 Fuseau horaire</span><span>Africa/Porto-Novo — UTC+01:00 (pas d'heure d'été)</span></div>
       <div class="kv"><span class="k">2.4 Téléphone</span><span>+229 01 21 36 87 23 (24 h/24, 7 j/7)</span></div>
-      <div class="kv"><span class="k">2.5 Télécopie</span><span>Néant</span></div>
-      <div class="kv"><span class="k">2.6 Autres moyens</span><span>WhatsApp : +229 <span class="todo">★</span></span></div>
-      <div class="kv"><span class="k">2.7 Courriel</span><span>soc@asin.bj (déclaration et correspondance incidents)</span></div>
-      <div class="kv"><span class="k">2.8 Clés publiques</span><span>Clé PGP du centre <span class="todo">★</span>, disponible sur le site et les serveurs de clés publics.</span></div>
-      <div class="kv"><span class="k">2.9 Membres de l'équipe</span><span>Non divulgués publiquement ; l'équipe agit sous la responsabilité du responsable du SOC.</span></div>
-      <div class="kv"><span class="k">2.10 Point de contact</span><span>Courriel soc@asin.bj et ligne 24/7. Pour une urgence, privilégier le téléphone.</span></div>
-
+      <div class="kv"><span class="k">2.5 Courriel</span><span>soc@asin.bj</span></div>
+      <div class="kv"><span class="k">2.6 Clés publiques</span><span>Clé PGP du centre <span class="todo">★</span>.</span></div>
+      <div class="kv"><span class="k">2.7 Membres</span><span>Non divulgués publiquement.</span></div>
       <h2>3. Charte</h2>
-      <h3>3.1 Mission</h3>
-      <p>Superviser, alerter et coordonner la réponse aux incidents de cybersécurité affectant les opérateurs d'infrastructures d'information critiques (OIIC) et les systèmes financiers décentralisés (SFD) du Bénin.</p>
-      <h3>3.2 Périmètre (constituency)</h3>
-      <p>Les OIIC désignés au titre de la Politique de Protection des Infrastructures d'Information Critiques (PPIIC, Décret 2023-060) et les SFD (institutions de microfinance) du Bénin.</p>
-      <h3>3.3 Rattachement et affiliations</h3>
-      <p>Rattaché à l'Agence des Systèmes d'Information et du Numérique (ASIN), sous tutelle du Ministère <span class="todo">★</span>. S'articule avec le bjCSIRT. Affiliations : FIRST, AfricaCERT <span class="todo">★</span>.</p>
-      <h3>3.4 Autorité</h3>
-      <p>Le centre opère sous l'autorité de l'ASIN, dans le cadre juridique de la PPIIC.</p>
-
+      <h3>3.1 Mission</h3><p>Superviser, alerter et coordonner la réponse aux incidents de cybersécurité affectant les OIIC et les SFD du Bénin.</p>
+      <h3>3.2 Périmètre</h3><p>Les OIIC désignés (PPIIC, Décret 2023-060) et les SFD (institutions de microfinance) du Bénin.</p>
+      <h3>3.3 Rattachement</h3><p>Rattaché à l'ASIN, sous tutelle du Ministère <span class="todo">★</span>. S'articule avec le bjCSIRT. Affiliations : FIRST, AfricaCERT <span class="todo">★</span>.</p>
       <h2>4. Politiques</h2>
-      <h3>4.1 Types d'incidents et niveau de soutien</h3>
-      <p>Le centre traite l'ensemble des incidents de cybersécurité touchant sa communauté. La priorité de traitement dépend de la criticité : impact, étendue, atteinte à un service essentiel, effet d'entraînement.</p>
-      <h3>4.2 Coopération et divulgation</h3>
-      <p>Le partage d'information suit le Traffic Light Protocol (TLP). Les informations sensibles ne sont communiquées qu'aux parties concernées et selon le besoin d'en connaître.</p>
-      <h3>4.3 Communication et authentification</h3>
-      <p>Communication par courriel (chiffrement PGP recommandé pour tout élément sensible) et par téléphone pour l'urgence.</p>
-
+      <h3>4.1 Types d'incidents et soutien</h3><p>Tous les incidents touchant la communauté ; priorité selon la criticité.</p>
+      <h3>4.2 Divulgation</h3><p>Partage selon le Traffic Light Protocol (TLP).</p>
       <h2>5. Services</h2>
-      <h3>5.1 Réponse à incident</h3>
-      <p>Triage, coordination et appui à la résolution des incidents déclarés, avec suivi jusqu'à la clôture et retour d'expérience.</p>
-      <h3>5.2 Activités proactives</h3>
-      <p>Surveillance, diffusion d'alertes et d'avis de sécurité, sensibilisation des opérateurs et des SFD.</p>
-
-      <h2>6. Formulaires de déclaration</h2>
-      <p>Déclaration en ligne via le <a data-pub="signaler">formulaire du site</a>, ou par courriel, téléphone et WhatsApp (voir section 2).</p>
-
-      <h2>7. Clauses de non-responsabilité</h2>
-      <p>Les informations diffusées par le CSIRT-OIIC/SFD le sont « en l'état ». Le centre met tout en œuvre pour en assurer l'exactitude, mais décline toute responsabilité quant aux erreurs, omissions ou dommages résultant de leur utilisation.</p>
+      <h3>5.1 Réponse à incident</h3><p>Triage, coordination et appui à la résolution, jusqu'à la clôture.</p>
+      <h3>5.2 Activités proactives</h3><p>Surveillance, diffusion d'alertes et d'avis, sensibilisation.</p>
+      <h2>6. Formulaires</h2><p>Déclaration via le <a data-pub="signaler">formulaire du site</a>, ou par courriel, téléphone et WhatsApp.</p>
+      <h2>7. Clauses</h2><p>Informations fournies « en l'état » ; le centre décline toute responsabilité pour les erreurs ou dommages liés à leur usage.</p>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="fin">
-    <div><img src="soc-logo.jpg" alt="SOC" class="fl"><p style="color:var(--muted);font-size:13.5px">Centre de supervision et de réponse aux incidents des OIIC & SFD. Cadre PPIIC — Décret 2023-060.</p></div>
-    <div><h5>Navigation</h5><a data-pub="veille">Alertes</a><a data-pub="signaler">Déclarer un incident</a><a data-pub="suivi">Suivi</a></div>
-    <div><h5>Ressources</h5><a data-pub="rfc">RFC 2350</a><a data-pub="cooperation">Coopération & partenaires</a><a data-pub="cooperation">Cadre réglementaire</a></div>
-    <div><h5>Contact</h5><a data-pub="contact">soc@asin.bj</a><a data-pub="contact">Urgence 24/7</a><p style="color:var(--muted);font-size:13.5px">FIRST · AfricaCERT</p></div>
+    <div><span class="plate"><img src="soc-logo.jpg" alt="SOC" style="height:32px"></span><p style="color:var(--muted);font-size:13.5px">Centre de supervision et de réponse aux incidents des OIIC & SFD. Cadre PPIIC — Décret 2023-060.</p><p style="color:var(--muted);font-size:12.5px;margin-top:4px">Membre de FIRST · AfricaCERT · ANCA · Trustbroker Africa</p></div>
+    <div><h5>Publications</h5><a data-pub="veille" data-filter="ale">Alertes</a><a data-pub="veille" data-filter="avi">Avis de sécurité</a><a data-pub="signaler">Déclarer un incident</a></div>
+    <div><h5>Ressources</h5><a data-pub="rfc">RFC 2350</a><a data-pub="cooperation">Coopération & partenaires</a><a data-pub="suivi">Suivi d'un signalement</a></div>
+    <div><h5>Contact</h5><a data-pub="contact">soc@asin.bj</a><a data-pub="contact">Urgence 24/7</a><a data-pub="contact">ASIN · Cotonou</a></div>
   </div>
   <div class="fbot">© 2026 SOC Bénin · maquette de démonstration</div>
 </footer>
 
 <script>
 var SECTORS={"TIC":["MTN Bénin","Moov Africa Bénin","Celtiis","SBIN","ASIN","ARCEP"],"Finance":["BCEAO (antenne)","Bank of Africa","Ecobank Bénin","Société Générale Bénin","UBA Bénin","NSIA Banque","GIM-UEMOA","CNSS"],"Énergie":["SBEE","CEB","SONACOP","ARE"],"Eau":["SONEB"],"Services publics":["ASIN","ANIP","DGID","Douanes","Trésor (DGTCP)","GUCE"],"Transport":["Port Autonome de Cotonou","ANAC","ANATT","ASECNA"],"Santé":["CNHU-HKM","SoBAPS","ANPS/ARCH"],"Médias":["ORTB","HAAC"],"SFD (microfinance)":["FECECAM","ALIDé","PADME","FINADEV","Vital Finance","CMMB"]};
+var MOIS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+function longDate(d){var p=d.split("/");return parseInt(p[0],10)+" "+MOIS[parseInt(p[1],10)-1]+" "+p[2];}
+function ts(d){var p=d.split("/");return new Date(+p[2],+p[1]-1,+p[0]).getTime();}
+function byDate(a,b){return ts(b.date)-ts(a.date);}
+
 var ALE=[
 {ref:"SOC-BJ-2026-ALE-004",date:"06/10/2026",t:"Rançongiciel ciblant les passerelles VPN non patchées",sev:"Critique",status:"En cours",type:"Alerte",desc:"Une campagne de rançongiciel exploite activement des failles sur des passerelles VPN non mises à jour exposées sur Internet. Plusieurs intrusions ont été observées dans la sous-région.",sys:"Passerelles VPN SSL/IPsec exposées et non corrigées.",sol:"Appliquer sans délai les correctifs de l'éditeur, restreindre l'exposition Internet, activer l'authentification multifacteur et rechercher d'éventuels signes de compromission.",refs:[{l:"Avis lié : SOC-BJ-2026-AVI-031"}]},
 {ref:"SOC-BJ-2026-ALE-003",date:"18/09/2026",t:"Vague d'hameçonnage mobile money visant les clients des SFD",sev:"Élevé",status:"En cours",type:"Alerte",desc:"De faux SMS et appels usurpant des institutions de microfinance demandent aux clients leurs codes de validation (OTP) pour détourner des comptes mobile money.",sys:"Clients mobile money des SFD.",sol:"Sensibiliser les clients : ne jamais communiquer un code OTP, ne pas rappeler les numéros reçus par SMS, signaler les messages frauduleux."},
 {ref:"SOC-BJ-2026-ALE-002",date:"05/09/2026",t:"Exploitation active d'une faille d'équipement périmétrique",sev:"Élevé",status:"Clôturée",type:"Alerte",desc:"Une faille d'un équipement de sécurité périmétrique a été exploitée dans la nature. L'alerte est clôturée après diffusion du correctif et vérification des parcs concernés.",sys:"Pare-feu et équipements de bordure concernés.",sol:"Correctif appliqué. Vérifier les journaux a posteriori pour toute activité suspecte."}];
 var MEN=[
-{ref:"SOC-BJ-2026-MEN-007",date:"01/10/2026",t:"Campagne d'hameçonnage usurpant des banques béninoises",sev:"Élevé",type:"Menace",desc:"Des sites et courriels frauduleux imitent des banques locales pour voler des identifiants de banque en ligne.",sys:"Clients de banque en ligne.",sol:"Vérifier l'adresse exacte du site, ne jamais saisir ses identifiants via un lien reçu, signaler les sites frauduleux."},
-{ref:"SOC-BJ-2026-MEN-006",date:"20/09/2026",t:"Recrudescence des fraudes au « faux conseiller » (SFD)",sev:"Modéré",type:"Menace",desc:"Des escrocs se font passer pour des conseillers d'institutions de microfinance afin d'obtenir des informations de compte.",sys:"Clients et agents des SFD.",sol:"Rappeler qu'un conseiller ne demande jamais de code secret ; vérifier l'identité par les canaux officiels."}];
+{ref:"SOC-BJ-2026-MEN-007",date:"01/10/2026",t:"Campagne d'hameçonnage usurpant des banques béninoises",sev:"Élevé",status:"En cours",type:"Menace",desc:"Des sites et courriels frauduleux imitent des banques locales pour voler des identifiants de banque en ligne.",sys:"Clients de banque en ligne.",sol:"Vérifier l'adresse exacte du site, ne jamais saisir ses identifiants via un lien reçu, signaler les sites frauduleux."},
+{ref:"SOC-BJ-2026-MEN-006",date:"20/09/2026",t:"Recrudescence des fraudes au « faux conseiller » (SFD)",sev:"Modéré",status:"En cours",type:"Menace",desc:"Des escrocs se font passer pour des conseillers d'institutions de microfinance afin d'obtenir des informations de compte.",sys:"Clients et agents des SFD.",sol:"Rappeler qu'un conseiller ne demande jamais de code secret ; vérifier l'identité par les canaux officiels."}];
 var AVI=[
 {ref:"SOC-BJ-2026-AVI-031",date:"06/10/2026",t:"Multiples vulnérabilités critiques dans des passerelles VPN",sev:"Critique",cvss:"9.8",type:"Avis",desc:"Plusieurs vulnérabilités, dont une permettant l'exécution de code à distance sans authentification, affectent des passerelles VPN largement déployées.",sys:"Passerelles VPN exposées (versions non corrigées).",sol:"Mettre à jour vers la version corrigée de l'éditeur dans les meilleurs délais.",refs:[{l:"Catalogue CVE (NVD)",u:"https://nvd.nist.gov/"}]},
 {ref:"SOC-BJ-2026-AVI-030",date:"22/09/2026",t:"Exécution de code à distance dans GLPI",sev:"Élevé",cvss:"8.8",type:"Avis",desc:"Une vulnérabilité permet l'exécution de code à distance sur les instances GLPI exposées.",sys:"Instances GLPI accessibles depuis Internet.",sol:"Appliquer la mise à jour éditeur ; restreindre l'accès à l'interface d'administration."},
 {ref:"SOC-BJ-2026-AVI-029",date:"12/09/2026",t:"Contournement d'authentification dans Zimbra",sev:"Modéré",cvss:"6.5",type:"Avis",desc:"Une faille autorise un contournement d'authentification sur certaines versions de Zimbra.",sys:"Serveurs de messagerie Zimbra.",sol:"Déployer le correctif ; vérifier les accès récents."},
 {ref:"SOC-BJ-2026-AVI-028",date:"03/09/2026",t:"Injection SQL dans un progiciel bancaire répandu",sev:"Élevé",cvss:"8.2",type:"Avis",desc:"Une injection SQL permet l'accès non autorisé à des données sur un progiciel bancaire répandu.",sys:"Applications bancaires utilisant le composant vulnérable.",sol:"Appliquer le correctif éditeur ; auditer les requêtes et les journaux d'accès."}];
 var ADV={};[].concat(ALE,MEN,AVI).forEach(function(a){ADV[a.ref]=a;});
+function sc(s){return s==="Critique"?"crit":s==="Élevé"?"high":s==="Modéré"?"mod":"low";}
+function metaOf(a){return a.cvss?("CVSS "+a.cvss):((a.status&&a.status!=="Clôturée")?a.status:a.sev);}
 
-function sevTxt(s){return '<span class="sev '+(s==="Critique"?"crit":"norm")+'">'+s+'</span>';}
-function advRows(items){return items.map(function(a){return '<a class="adv" data-ref="'+a.ref+'"><div class="am"><span class="ref">'+a.ref+'</span><span>'+a.date+'</span>'+sevTxt(a.sev)+(a.cvss?'<span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?'<span class="cvss">'+a.status+'</span>':'')+'</div><div class="at">'+a.t+'</div></a>';}).join("");}
-function listRows(items){return items.map(function(a){return '<a class="lrow" data-ref="'+a.ref+'"><span class="ld">'+a.date+'</span><div><div class="lt">'+a.t+'</div><span class="lr">'+a.ref+'</span></div><span class="lx">'+sevTxt(a.sev)+(a.cvss?' <span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?' <span class="cvss">'+a.status+'</span>':'')+'</span></a>';}).join("");}
+function pubRow(a){return '<a class="pub s-'+sc(a.sev)+'" data-ref="'+a.ref+'">'+
+  '<span class="pdate">'+longDate(a.date)+'</span>'+
+  '<span class="pref">'+a.ref+'</span>'+
+  '<span class="ptitle"><i class="sdot"></i>'+a.t+'</span>'+
+  '<span class="pmeta">'+metaOf(a)+'</span></a>';}
+function pubList(items){return items.map(pubRow).join("");}
 
-function renderHome(){document.getElementById("homeVeilleList").innerHTML=advRows([ALE[0],AVI[0],MEN[0]]);bindPub();}
-var veFilter="tous";
-function renderVeille(){
-  var fl=document.getElementById("veFilters");
-  fl.innerHTML=[["tous","Toutes"],["ale","Alertes & menaces"],["avi","Avis (vulnérabilités)"]].map(function(f){return '<button data-f="'+f[0]+'"'+(veFilter===f[0]?' class="on"':'')+'>'+f[1]+'</button>';}).join("");
-  fl.querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){veFilter=b.dataset.f;renderVeille();});});
-  var items=veFilter==="tous"?ALE.concat(MEN).concat(AVI):veFilter==="ale"?ALE.concat(MEN):AVI;
-  document.getElementById("veList").innerHTML=listRows(items);
+function renderHome(){
+  document.getElementById("homeAle").innerHTML=pubList(ALE.concat(MEN).sort(byDate).slice(0,5));
+  document.getElementById("homeAvi").innerHTML=pubList(AVI.slice().sort(byDate).slice(0,4));
   bindPub();
 }
+var veFilter="ale";
+function renderVeille(){
+  document.getElementById("veTitle").textContent=veFilter==="avi"?"Avis de sécurité":veFilter==="ale"?"Alertes":"Publications";
+  var fl=document.getElementById("veFilters");
+  fl.innerHTML=[["ale","Alertes & menaces"],["avi","Avis (vulnérabilités)"],["tous","Tout"]].map(function(f){return '<button data-f="'+f[0]+'"'+(veFilter===f[0]?' class="on"':'')+'>'+f[1]+'</button>';}).join("");
+  fl.querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){veFilter=b.dataset.f;renderVeille();});});
+  var items=veFilter==="avi"?AVI.slice():veFilter==="ale"?ALE.concat(MEN):ALE.concat(MEN).concat(AVI);
+  document.getElementById("veList").innerHTML=pubList(items.sort(byDate));bindPub();
+}
 function showFiche(ref){var a=ADV[ref];if(!a)return;
-  var h='<a class="back" data-pub="veille">← Retour aux alertes</a>'+
-    '<h1>'+a.t+'</h1>'+
-    '<div class="fmeta">'+(a.type?'<span class="ftag">'+a.type+'</span>':'')+'<span class="ref">'+a.ref+'</span><span>'+a.date+'</span>'+sevTxt(a.sev)+(a.cvss?'<span class="cvss">CVSS '+a.cvss+'</span>':'')+(a.status?'<span class="cvss">'+a.status+'</span>':'')+'</div>'+
+  var h='<div class="fiche s-'+sc(a.sev)+'"><a class="back" data-pub="veille">← Retour aux publications</a>'+
+    '<div class="fhead"><div class="fmeta"><span class="ftype">'+(a.type||"Alerte")+'</span><span class="mono">'+a.ref+'</span><span class="mono">'+longDate(a.date)+'</span><span class="fsev">'+a.sev+'</span>'+(a.cvss?'<span class="mono">CVSS '+a.cvss+'</span>':'')+(a.status?'<span class="mono">'+a.status+'</span>':'')+'</div><h1>'+a.t+'</h1></div>'+
     (a.desc?'<h3>Description</h3><p>'+a.desc+'</p>':'')+
     (a.sys?'<h3>Systèmes concernés</h3><p>'+a.sys+'</p>':'')+
     (a.sol?'<h3>Solution / mesures</h3><p>'+a.sol+'</p>':'')+
-    (a.refs&&a.refs.length?'<h3>Références</h3>'+a.refs.map(function(r){return r.u?'<a class="fref" href="'+r.u+'" target="_blank" rel="noopener">'+r.l+'</a>':'<span class="fref">'+r.l+'</span>';}).join(''):'');
-  document.getElementById("ficheBody").innerHTML=h;
-  showPub("fiche");bindPub();
+    (a.refs&&a.refs.length?'<h3>Références</h3>'+a.refs.map(function(r){return r.u?'<a class="fref" href="'+r.u+'" target="_blank" rel="noopener">'+r.l+'</a>':'<span class="fref">'+r.l+'</span>';}).join(''):'')+'</div>';
+  document.getElementById("ficheBody").innerHTML=h;showPub("fiche");bindPub();
 }
 
 var fOrg=document.getElementById("f-org");
 function fillFormOrg(mode){
   fOrg.innerHTML='<option value="" selected disabled>Sélectionner…</option>';
-  Object.keys(SECTORS).forEach(function(sec){
-    var isS=sec.indexOf("SFD")>-1;
-    if(mode==="OIIC"&&isS)return;
-    if(mode==="SFD"&&!isS)return;
-    var og=document.createElement("optgroup");og.label=sec;
-    SECTORS[sec].forEach(function(o){var op=document.createElement("option");op.value=o;op.textContent=o;op.dataset.sector=sec;og.appendChild(op);});
-    fOrg.appendChild(og);
-  });
+  Object.keys(SECTORS).forEach(function(sec){var isS=sec.indexOf("SFD")>-1;if(mode==="OIIC"&&isS)return;if(mode==="SFD"&&!isS)return;var og=document.createElement("optgroup");og.label=sec;SECTORS[sec].forEach(function(o){var op=document.createElement("option");op.value=o;op.textContent=o;op.dataset.sector=sec;og.appendChild(op);});fOrg.appendChild(og);});
   document.getElementById("f-sector").value="";
 }
 fillFormOrg("OIIC");
@@ -495,11 +541,17 @@ var drop=document.getElementById("drop"),fileInput=document.getElementById("f-fi
 document.getElementById("trackBtn").addEventListener("click",function(){var v=document.getElementById("trackInput").value.trim();if(v)document.getElementById("trackRef").textContent=v.toUpperCase();});
 document.addEventListener("click",function(e){var b=e.target.closest(".cp");if(!b)return;var t=b.dataset.copy;if(t&&navigator.clipboard){navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="Copié";setTimeout(function(){b.textContent=o;},1200);}).catch(function(){});}});
 
-document.getElementById("menuToggle").addEventListener("click",function(){document.getElementById("pubnav").classList.toggle("open");});
+document.getElementById("mtog").addEventListener("click",function(){document.getElementById("nav").classList.toggle("open");});
 var pubViews=["home","veille","fiche","signaler","suivi","cooperation","contact","rfc"];
-function showPub(v){if(pubViews.indexOf(v)<0)v="home";pubViews.forEach(function(x){document.getElementById("pub-"+x).hidden=(x!==v);});document.querySelectorAll("#pubnav a").forEach(function(a){a.classList.toggle("on",a.dataset.pub===v);});document.getElementById("pubnav").classList.remove("open");if(v==="veille")renderVeille();window.scrollTo({top:0});}
-function bindPub(){document.querySelectorAll("[data-pub]").forEach(function(b){if(b._b)return;b._b=1;b.addEventListener("click",function(){showPub(b.dataset.pub);});});document.querySelectorAll("[data-ref]").forEach(function(b){if(b._r)return;b._r=1;b.addEventListener("click",function(e){e.preventDefault();showFiche(b.dataset.ref);});});}
+function showPub(v,filter){if(pubViews.indexOf(v)<0)v="home";if(v==="veille"&&filter)veFilter=filter;pubViews.forEach(function(x){document.getElementById("pub-"+x).hidden=(x!==v);});document.querySelectorAll("#nav a").forEach(function(a){a.classList.toggle("on",a.dataset.pub===v&&(!a.dataset.filter||a.dataset.filter===veFilter));});document.getElementById("nav").classList.remove("open");if(v==="veille")renderVeille();window.scrollTo({top:0});}
+function bindPub(){document.querySelectorAll("[data-pub]").forEach(function(b){if(b._b)return;b._b=1;b.addEventListener("click",function(){showPub(b.dataset.pub,b.dataset.filter);});});document.querySelectorAll("[data-ref]").forEach(function(b){if(b._r)return;b._r=1;b.addEventListener("click",function(e){e.preventDefault();showFiche(b.dataset.ref);});});}
 document.getElementById("hdLogo").addEventListener("click",function(){showPub("home");});
+var themeBtn=document.getElementById("themeBtn"),mq=matchMedia("(prefers-color-scheme: dark)");
+function effDark(){var c=document.documentElement.getAttribute("data-theme");return c?c==="dark":mq.matches;}
+function syncSwitch(){themeBtn.setAttribute("aria-checked",effDark()?"true":"false");}
+themeBtn.addEventListener("click",function(){document.documentElement.setAttribute("data-theme",effDark()?"light":"dark");syncSwitch();});
+try{mq.addEventListener("change",syncSwitch);}catch(e){}
+syncSwitch();
 
 renderHome();bindPub();showPub("home");
 </script>
